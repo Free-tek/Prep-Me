@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.botosofttechnologies.prepme">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".SplashScreenActivity"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="co.paystack.android.PublicKey"
+            android:value="pk_test_b864843349a7579fc3a00420f4af5a6dd7821184"/>
+
+
+        <activity
+            android:name=".NavigationActivity"
+            android:label="Home"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"></activity>
+
+
+        <activity
+            android:name=".LoginActivity"
+            android:label="Login"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AppTheme.GrayStatusBar"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity
+            android:name=".SignUpSubjectsActivity"
+            android:label="Login"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AppTheme.GrayStatusBar"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:label="Forgot Password"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity
+            android:name=".SignUpActivity"
+            android:label="Sign Up"
+            android:theme="@style/AppTheme.GrayStatusBar"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+
+
+        <activity
+            android:name=".PaymentActivity"
+            android:label="Subscribe"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AppTheme.GrayStatusBar"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity
+            android:name=".TakeExamActivity"
+            android:label="Take Exam"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="stateHidden"
+            >
+        </activity>
+
+        <activity
+            android:name=".ExamActivity"
+            android:label="Take Exam"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity
+            android:name=".ExamScoreActivity"
+            android:label="Exam Result"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity
+            android:name=".SubjectChangeActivity"
+            android:label="Change Subject"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Profile"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+
+
+        <activity
+            android:name=".LeaderBoardActivity"
+            android:label="Leader Board"
+            android:screenOrientation="unspecified"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+
+
+    </application>
+
+</manifest>

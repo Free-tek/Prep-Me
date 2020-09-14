@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/selectSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Select a new Subject combination"
+        android:layout_gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+
+            <ImageView
+                android:id="@+id/done"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80dp"
+                android:src="@drawable/check" />
+
+            <TextView
+                android:id="@+id/done_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Done"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_below="@+id/done"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+            <CheckBox
+                android:id="@+id/English"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="30dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="English Lang"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+            <CheckBox
+                android:id="@+id/Maths"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="31dp"
+                android:layout_marginBottom="4dp"
+                android:layout_alignLeft="@+id/Literature"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="Mathematics"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="11sp" />
+
+            <CheckBox
+                android:id="@+id/Physics"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/English"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="Physics"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+
+            <CheckBox
+                android:id="@+id/Chemistry"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Maths"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:layout_alignLeft="@+id/Literature"
+                android:paddingStart="8dp"
+                android:text="Chemistry"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <CheckBox
+                android:id="@+id/Biology"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Physics"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="Biology"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+            <CheckBox
+                android:id="@+id/Commerce"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Chemistry"
+                android:layout_alignLeft="@+id/Literature"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="4dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="Commerce"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="11sp" />
+
+
+            <CheckBox
+                android:id="@+id/Accounting"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Biology"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="Accounting"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+
+            <CheckBox
+                android:id="@+id/Government"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Commerce"
+                android:layout_alignLeft="@+id/Literature"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="Government"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+
+
+            <CheckBox
+                android:id="@+id/Economics"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Accounting"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="Economics"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+
+            <CheckBox
+                android:id="@+id/Literature"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Government"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="Literature in English"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+
+            <CheckBox
+                android:id="@+id/Geography"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Economics"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="Geography"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+
+            <CheckBox
+                android:id="@+id/Agric"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Literature"
+                android:layout_alignLeft="@+id/Literature"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="Agricultural Sc."
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+
+            <CheckBox
+                android:id="@+id/History"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Geography"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="History"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+
+            <CheckBox
+                android:id="@+id/Crk"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/Agric"
+                android:layout_alignLeft="@+id/Literature"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="C.R.K"
+                android:textSize="11sp"
+                android:buttonTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"/>
+
+
+
+            <Button
+                android:id="@+id/finished"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/Crk"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="40dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button"
+                android:text="Finish"
+                android:textColor="@android:color/white"
+                />
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+
+
+
+</LinearLayout>
