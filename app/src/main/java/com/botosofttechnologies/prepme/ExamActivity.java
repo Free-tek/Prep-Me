@@ -356,7 +356,7 @@ public class ExamActivity extends AppCompatActivity {
                     String moptionB = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionB").getValue());
                     String moptionC = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionC").getValue());
                     String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionD").getValue());
-                    String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue());
+                    String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue()).toLowerCase();
                     String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("instruction").getValue());
 
 
@@ -397,7 +397,7 @@ public class ExamActivity extends AppCompatActivity {
                     String moptionB = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionB").getValue());
                     String moptionC = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionC").getValue());
                     String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionD").getValue());
-                    String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue());
+                    String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue()).toLowerCase();
                     String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("instruction").getValue());
 
                     //number.setText(String.valueOf(currentPaper2Count));
@@ -431,7 +431,7 @@ public class ExamActivity extends AppCompatActivity {
                     String moptionB = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionB").getValue());
                     String moptionC = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionC").getValue());
                     String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionD").getValue());
-                    String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue());
+                    String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue()).toLowerCase();
                     String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("instruction").getValue());
 
 
@@ -472,7 +472,7 @@ public class ExamActivity extends AppCompatActivity {
                     String moptionB = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionB").getValue());
                     String moptionC = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionC").getValue());
                     String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionD").getValue());
-                    String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue());
+                    String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue()).toLowerCase();
                     String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("instruction").getValue());
 
 
@@ -630,13 +630,13 @@ public class ExamActivity extends AppCompatActivity {
     private String getOptionSelected() {
         String answer = null;
         if(optionA.isChecked()){
-            answer = "optionA";
+            answer = "a";
         }else if(optionB.isChecked()){
-            answer = "optionB";
+            answer = "b";
         }else if(optionC.isChecked()){
-            answer = "optionC";
+            answer = "c";
         }else if(optionD.isChecked()){
-            answer = "optionD";
+            answer = "d";
         }
 
         return answer;

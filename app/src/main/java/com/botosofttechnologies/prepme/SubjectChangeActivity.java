@@ -142,7 +142,7 @@ public class SubjectChangeActivity extends AppCompatActivity {
             if (checkBox.isChecked()) {
                 String subject = checkBox.getText().toString();
                 if(i == 1){
-                    $paper1 = subject;
+                    $paper1 = "English Language";
                     i++;
                 }else if(i == 2){
                     $paper2 = subject;

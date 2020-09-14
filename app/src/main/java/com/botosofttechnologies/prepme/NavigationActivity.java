@@ -435,14 +435,17 @@ public class NavigationActivity extends AppCompatActivity
 
 
                 final int questionNo = (int) (Math.random() * 100) ;
+
+
                 //TODO:questionNo should be used to replace "1" below and lastQuizNo value saved to Firebase;
+                //TODO:change reference database to database for question of the day questions
 
 
                 final DatabaseReference questionSubject = database.getReference().child(qSubject);
                 questionSubject.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        $answer = String.valueOf(dataSnapshot.child("1").child("answer").getValue());
+                        $answer = String.valueOf(dataSnapshot.child("1").child("answer").getValue()).toLowerCase();
                         String $optionA = String.valueOf(dataSnapshot.child("1").child("optionA").getValue());
                         String $optionB = String.valueOf(dataSnapshot.child("1").child("optionB").getValue());
                         String $optionC = String.valueOf(dataSnapshot.child("1").child("optionC").getValue());
@@ -508,7 +511,7 @@ public class NavigationActivity extends AppCompatActivity
         questionSubject.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                $answer = String.valueOf(dataSnapshot.child(lastQuizQuestionNo).child("answer").getValue());
+                $answer = String.valueOf(dataSnapshot.child(lastQuizQuestionNo).child("answer").getValue()).toLowerCase();
                 String $optionA = String.valueOf(dataSnapshot.child(lastQuizQuestionNo).child("optionA").getValue());
                 String $optionB = String.valueOf(dataSnapshot.child(lastQuizQuestionNo).child("optionB").getValue());
                 String $optionC = String.valueOf(dataSnapshot.child(lastQuizQuestionNo).child("optionC").getValue());
@@ -552,13 +555,13 @@ public class NavigationActivity extends AppCompatActivity
     private String getOptionSelected() {
         String answer = null;
         if(optionA.isChecked()){
-            answer = "optionA";
+            answer = "a";
         }else if(optionB.isChecked()){
-            answer = "optionB";
+            answer = "b";
         }else if(optionC.isChecked()){
-            answer = "optionC";
+            answer = "c";
         }else if(optionD.isChecked()){
-            answer = "optionD";
+            answer = "d";
         }
 
         return answer;

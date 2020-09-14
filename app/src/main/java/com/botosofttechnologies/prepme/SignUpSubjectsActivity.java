@@ -300,7 +300,12 @@ public class SignUpSubjectsActivity extends AppCompatActivity {
         for (CheckBox checkBox : checkBoxes) {
             if (checkBox.isChecked()) {
                 String subject = checkBox.getText().toString();
-                userId.child("subjects").child(String.valueOf(checkAccumulator)).setValue(subject);
+                if (subject.equals("English Lang")){
+                    userId.child("subjects").child(String.valueOf(checkAccumulator)).setValue("English Language");
+                }else{
+                    userId.child("subjects").child(String.valueOf(checkAccumulator)).setValue(subject);
+                }
+
                 checkAccumulator += 1;
             }
         }

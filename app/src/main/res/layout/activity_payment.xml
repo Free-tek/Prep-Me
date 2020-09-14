@@ -154,6 +154,7 @@
                 android:layout_height="35dp"
                 android:layout_width="220dp"
                 android:layout_marginLeft="40dp"
+                android:layout_marginRight="35dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_below="@+id/firstName"
                 android:layout_marginTop="25dp"
@@ -229,12 +230,13 @@
             <ImageView
                 android:id="@+id/t5"
                 android:layout_height="40dp"
-                android:layout_width="140dp"
-                android:layout_marginRight="30dp"
+                android:layout_width="120dp"
+                android:layout_toRightOf="@+id/t4"
+                android:layout_marginLeft="20dp"
                 android:src="@drawable/transparent_text"
                 android:layout_below="@+id/cvv"
                 android:layout_marginTop="-40dp"
-                android:layout_alignParentRight="true"
+
                 />
 
 
