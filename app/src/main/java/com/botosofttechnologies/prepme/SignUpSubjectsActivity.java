@@ -270,7 +270,8 @@ public class SignUpSubjectsActivity extends AppCompatActivity {
         userId.child("password").setValue($password);
         userId.child("age").setValue($age);
         userId.child("subscription").setValue(false);
-        userId.child("coins").setValue("0");
+        userId.child("coins").setValue(0);
+        userId.child("remaining_subscription").setValue(0);
         userId.child("lastQuizDate").setValue("2000-02-21");
 
 

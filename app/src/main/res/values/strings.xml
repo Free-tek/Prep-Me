@@ -21,6 +21,17 @@
     <string name="process_payment">PROCESS PAYMENT</string>
     <string name="lost">Oops.. Wrong answer</string>
 
+    <string name="instruction">INSTRUCTIONS: \n\n * You are advised to take the demo test to familiarise yourself with the test environment before taking the exam.
+    \n\n * You have 60 minutes to answer 70 questions.
+    \n\n * Please make sure you are in a quiet environment where you won\t be disturbed through out the test.
+    \n\n * Please make sure nobody assists you in taking the test and that you don\'t cheat.
+    \n\n * Make sure you do not cancel the app or the test at any point because you  won\'t be able to resume the test.
+    \n\n * You  are advised to make sure your phone is fully charged before taking the test.
+    \n\n * Top candidates on the leader board are eligible to win awesome prices periodically.
+    \n\n * We won\'t end this without saying Goodluck.</string>
+
+
+
 
 
 </resources>

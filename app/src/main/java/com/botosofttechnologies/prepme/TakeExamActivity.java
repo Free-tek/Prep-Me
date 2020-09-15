@@ -30,12 +30,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-public class
-TakeExamActivity extends AppCompatActivity {
+public class TakeExamActivity extends AppCompatActivity {
 
-    TextView candidateName, exam_no, paper1, paper2, paper3, paper4, change_subject, selectSubject, demo;
-    Button take_exam, finished;
-    CheckBox English, Maths, Physics, Chemistry, Biology, Commerce, Accounting, Government, Economics, Literature, Geography, Agric, History, Crk;
+    TextView candidateName, exam_no, paper1, paper2, paper3, paper4, demo, instruction;
+    Button take_exam, changeSubject, takeDemoExam;
     ImageView account;
 
     private Typeface header, subheading;
@@ -126,28 +124,21 @@ TakeExamActivity extends AppCompatActivity {
         paper2 = (TextView) findViewById(R.id.paper2);
         paper3 = (TextView) findViewById(R.id.paper3);
         paper4 = (TextView) findViewById(R.id.paper4);
-        change_subject = (TextView) findViewById(R.id.change_subject);
-        selectSubject = (TextView) findViewById(R.id.selectSubject);
+        changeSubject = (Button) findViewById(R.id.change_subject);
 
         demo = (TextView) findViewById(R.id.demo);
 
         take_exam = (Button) findViewById(R.id.take_exam);
-        finished = (Button) findViewById(R.id.finished);
+        takeDemoExam = (Button) findViewById(R.id.take_demo_exam);
+        instruction = (TextView) findViewById(R.id.instruction);
 
-        English = (CheckBox) findViewById(R.id.English);
-        Maths = (CheckBox) findViewById(R.id.Maths);
-        Physics = (CheckBox) findViewById(R.id.Physics);
-        Chemistry = (CheckBox) findViewById(R.id.Chemistry);
-        Biology = (CheckBox) findViewById(R.id.Biology);
-        Commerce = (CheckBox) findViewById(R.id.Commerce);
-        Accounting = (CheckBox) findViewById(R.id.Accounting);
-        Government = (CheckBox) findViewById(R.id.Government);
-        Economics = (CheckBox) findViewById(R.id.Economics);
-        Literature = (CheckBox) findViewById(R.id.Literature);
-        Geography = (CheckBox) findViewById(R.id.Geography);
-        Agric = (CheckBox) findViewById(R.id.Agric);
-        History = (CheckBox) findViewById(R.id.History);
-        Crk = (CheckBox) findViewById(R.id.Crk);
+        changeSubject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TakeExamActivity.this, SubjectChangeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         account = (ImageView) findViewById(R.id.account);
 
@@ -178,10 +169,15 @@ TakeExamActivity extends AppCompatActivity {
                 paper2.setVisibility(View.VISIBLE);
                 paper3.setVisibility(View.VISIBLE);
                 paper4.setVisibility(View.VISIBLE);
-                change_subject.setVisibility(View.VISIBLE);
+                changeSubject.setVisibility(View.VISIBLE);
+
 
                 if(_demo.equals("true")){
                     demo.setVisibility(View.VISIBLE);
+                    takeDemoExam.setText("TAKE DEMO TEST");
+                }else{
+                    takeDemoExam.setVisibility(View.VISIBLE);
+                    instruction.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -192,149 +188,51 @@ TakeExamActivity extends AppCompatActivity {
         });
 
 
+        takeDemoExam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TakeExamActivity.this, ExamActivity.class);
 
+                $paper1 = String.valueOf(paper1.getText());
+                $paper2 = String.valueOf(paper2.getText());
+                $paper3 = String.valueOf(paper3.getText());
+                $paper4 = String.valueOf(paper4.getText());
+                String studentName = String.valueOf(candidateName.getText());
+
+                intent.putExtra("paper2", $paper2 );
+                intent.putExtra("paper3", $paper3 );
+                intent.putExtra("paper4", $paper4 );
+                intent.putExtra("examNo", ExamNo );
+                intent.putExtra("studentName", studentName );
+                intent.putExtra("demo", "true" );
+
+                Date currentDate = (Date) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("Africa/Lagos")).getTime();
+
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                String date = dateFormat.format(currentDate);
+                users.child(userId).child("currentExam").child("date").setValue(date);
+                users.child(userId).child("currentExam").child("examNo").setValue(ExamNo);
+                users.child(userId).child("currentExam").child("paper1").setValue($paper1);
+                users.child(userId).child("currentExam").child("paper2").setValue($paper2);
+                users.child(userId).child("currentExam").child("paper3").setValue($paper3);
+                users.child(userId).child("currentExam").child("paper4").setValue($paper4);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         header = Typeface.createFromAsset(getAssets(), "fonts/heading.ttf");
         subheading = Typeface.createFromAsset(getAssets(), "fonts/subheading1.ttf");
 
-        selectSubject.setTypeface(subheading);
+
         candidateName.setTypeface(subheading);
         exam_no.setTypeface(subheading);
         paper1.setTypeface(subheading);
         paper2.setTypeface(subheading);
         paper3.setTypeface(subheading);
         paper4.setTypeface(subheading);
-        selectSubject.setTypeface(header);
 
-
-
-        English.setTypeface(subheading);
-        Maths.setTypeface(subheading);
-        Physics.setTypeface(subheading);
-        Chemistry.setTypeface(subheading);
-        Biology.setTypeface(subheading);
-        Commerce.setTypeface(subheading);
-        Accounting.setTypeface(subheading);
-        Government.setTypeface(subheading);
-        Economics.setTypeface(subheading);
-        Literature.setTypeface(subheading);
-        Geography.setTypeface(subheading);
-        Agric.setTypeface(subheading);
-        History.setTypeface(subheading);
-        Crk.setTypeface(subheading);
-
-
-        selectSubject.setVisibility(View.INVISIBLE);
-        English.setVisibility(View.INVISIBLE);
-        Maths.setVisibility(View.INVISIBLE);
-        Physics.setVisibility(View.INVISIBLE);
-        Chemistry.setVisibility(View.INVISIBLE);
-        Biology.setVisibility(View.INVISIBLE);
-        Commerce.setVisibility(View.INVISIBLE);
-        Accounting.setVisibility(View.INVISIBLE);
-        Government.setVisibility(View.INVISIBLE);
-        Economics.setVisibility(View.INVISIBLE);
-        Literature.setVisibility(View.INVISIBLE);
-        Geography.setVisibility(View.INVISIBLE);
-        Agric.setVisibility(View.INVISIBLE);
-        History.setVisibility(View.INVISIBLE);
-        Crk.setVisibility(View.INVISIBLE);
-        finished.setVisibility(View.INVISIBLE);
-
-
-
-
-
-        change_subject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectSubject.setVisibility(View.VISIBLE);
-                English.setVisibility(View.VISIBLE);
-                Maths.setVisibility(View.VISIBLE);
-                Physics.setVisibility(View.VISIBLE);
-                Chemistry.setVisibility(View.VISIBLE);
-                Biology.setVisibility(View.VISIBLE);
-                Commerce.setVisibility(View.VISIBLE);
-                Accounting.setVisibility(View.VISIBLE);
-                Government.setVisibility(View.VISIBLE);
-                Economics.setVisibility(View.VISIBLE);
-                Literature.setVisibility(View.VISIBLE);
-                Geography.setVisibility(View.VISIBLE);
-                Agric.setVisibility(View.VISIBLE);
-                History.setVisibility(View.VISIBLE);
-                Crk.setVisibility(View.VISIBLE);
-                finished.setVisibility(View.VISIBLE);
-
-                take_exam.setVisibility(View.INVISIBLE);
-                account.setVisibility(View.INVISIBLE);
-                candidateName.setVisibility(View.INVISIBLE);
-                exam_no.setVisibility(View.INVISIBLE);
-                paper1.setVisibility(View.INVISIBLE);
-                paper2.setVisibility(View.INVISIBLE);
-                paper3.setVisibility(View.INVISIBLE);
-                paper4.setVisibility(View.INVISIBLE);
-                change_subject.setVisibility(View.INVISIBLE);
-
-
-            }
-        });
-
-
-        finished.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkAccumulator = 0;
-                countCheck();
-                if(!English.isChecked()){
-                    Toast.makeText(TakeExamActivity.this, "English is a compulsory subject", Toast.LENGTH_SHORT).show();
-                }else if(checkAccumulator != 4){
-                    Toast.makeText(TakeExamActivity.this,  "Select only four subject combinations", Toast.LENGTH_SHORT).show();
-                }else if (checkAccumulator == 4){
-                    getChecked();
-
-                    selectSubject.setVisibility(View.INVISIBLE);
-                    English.setVisibility(View.INVISIBLE);
-                    Maths.setVisibility(View.INVISIBLE);
-                    Physics.setVisibility(View.INVISIBLE);
-                    Chemistry.setVisibility(View.INVISIBLE);
-                    Biology.setVisibility(View.INVISIBLE);
-                    Commerce.setVisibility(View.INVISIBLE);
-                    Accounting.setVisibility(View.INVISIBLE);
-                    Government.setVisibility(View.INVISIBLE);
-                    Economics.setVisibility(View.INVISIBLE);
-                    Literature.setVisibility(View.INVISIBLE);
-                    Geography.setVisibility(View.INVISIBLE);
-                    Agric.setVisibility(View.INVISIBLE);
-                    History.setVisibility(View.INVISIBLE);
-                    Crk.setVisibility(View.INVISIBLE);
-                    finished.setVisibility(View.INVISIBLE);
-
-
-                    take_exam.setVisibility(View.VISIBLE);
-                    account.setVisibility(View.VISIBLE);
-                    candidateName.setVisibility(View.VISIBLE);
-                    exam_no.setVisibility(View.VISIBLE);
-                    paper1.setVisibility(View.VISIBLE);
-                    paper2.setVisibility(View.VISIBLE);
-                    paper3.setVisibility(View.VISIBLE);
-                    paper4.setVisibility(View.VISIBLE);
-                    change_subject.setVisibility(View.VISIBLE);
-
-                    paper1.setText($paper1);
-                    paper2.setText($paper2);
-                    paper3.setText($paper3);
-                    paper4.setText($paper4);
-
-                    users.child(userId).child("subjects").child("0").setValue($paper1);
-                    users.child(userId).child("subjects").child("1").setValue($paper2);
-                    users.child(userId).child("subjects").child("2").setValue($paper3);
-                    users.child(userId).child("subjects").child("3").setValue($paper4);
-
-
-                }
-            }
-        });
 
 
         take_exam.setOnClickListener(new View.OnClickListener() {
@@ -370,48 +268,6 @@ TakeExamActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void getChecked() {
-        CheckBox[] checkBoxes = {English, Maths, Physics, Chemistry, Biology, Commerce, Accounting, Government, Economics, Literature, Geography, Agric, History, Crk};
-        int i = 1;
-        for (CheckBox checkBox : checkBoxes) {
-            if (checkBox.isChecked()) {
-                String subject = checkBox.getText().toString();
-                if(i == 1){
-                    $paper1 = subject;
-                    i++;
-                }else if(i == 2){
-                    $paper2 = subject;
-                    i++;
-                }else if(i == 3){
-                    $paper3 = subject;
-                    i++;
-                }else if(i == 4){
-                    $paper4 = subject;
-                    i++;
-                }
-
-            }
-        }
-
-    }
-
-
-    private boolean countCheck() {
-
-        CheckBox[] checkBoxes = {English, Maths, Physics, Chemistry, Biology, Commerce, Accounting, Government, Economics, Literature, Geography, Agric, History, Crk};
-        boolean isChecked = false;
-        for (CheckBox checkBox : checkBoxes) {
-            if (checkBox.isChecked()) {
-                checkAccumulator += 1;
-                isChecked = checkAccumulator == 4;
-            } else {
-                isChecked = false;
-            }
-        }
-        return isChecked;
-    }
-
 
     public String getExamNo(){
         int number1, number2;

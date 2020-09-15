@@ -31,6 +31,7 @@ import java.util.Collections;
 
 public class ExamActivity extends AppCompatActivity {
 
+    //TODO: chage subscription and remaining_test afterwards
     TextView number, time, question, instruction, demo;
     RadioGroup radioGroup;
     RadioButton optionA, optionB, optionC, optionD;
@@ -224,13 +225,32 @@ public class ExamActivity extends AppCompatActivity {
 
         submit = (Button) findViewById(R.id.submit);
 
-        paper1Count = 10; //60
-        paper2Count = 5; //40
-        paper3Count = 5; //40
-        paper4Count = 5; //40
+        //TODO:Number of  questions per paper
+        if(_demo.equals("true")){
+            // a demo test
+            paper1Count = 7; //60
+            paper2Count = 3; //40
+            paper3Count = 3; //40
+            paper4Count = 3; //40
 
-        getQuestionNo();
-        timerStart(10800000);
+            getQuestionNo();
+            //time for demo 10 minutes
+            timerStart(600000);
+        }else{
+            //not a demo test
+            paper1Count = 25;
+            paper2Count = 15;
+            paper3Count = 15;
+            paper4Count = 15;
+
+            getQuestionNo();
+            //time for exam 60 minutes
+            timerStart(3600000);
+
+        }
+
+
+
 
 
         submit.setOnClickListener(new View.OnClickListener() {

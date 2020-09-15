@@ -5,198 +5,215 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_height="110dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:background="@android:color/white"
-        android:elevation="4dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp">
 
-        <ImageView
-            android:id="@+id/profile"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_account_circle_black_24dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"/>
-
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:id="@+id/name"
-            android:text=""
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_toRightOf="@+id/profile"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
-            android:gravity="left"
-            />
-
-        <ImageView
-            android:id="@+id/stars1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_stars_black_24dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="50dp"/>
-
-
-        <TextView
-            android:id="@+id/stars"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_alignRight="@+id/stars1"
-            android:layout_marginLeft="43dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="-20dp"
-            android:text=""
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="14sp" />
-
-
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="200dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:text=""
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_toRightOf="@+id/profile"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="60dp"
-            android:gravity="left"/>
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_height="110dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@android:color/white"
+                android:elevation="4dp"
+                >
+
+                <ImageView
+                    android:id="@+id/profile"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_account_circle_black_24dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"/>
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:id="@+id/name"
+                    android:text=""
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_toRightOf="@+id/profile"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:gravity="left"
+                    />
+
+                <ImageView
+                    android:id="@+id/stars1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_stars_black_24dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="50dp"/>
+
+
+                <TextView
+                    android:id="@+id/stars"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignRight="@+id/stars1"
+                    android:layout_marginLeft="43dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="-20dp"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text=""
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_toRightOf="@+id/profile"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="60dp"
+                    android:gravity="left"/>
 
 
 
 
-    </RelativeLayout>
+            </RelativeLayout>
 
 
 
 
-    <LinearLayout
-        android:layout_height="200dp"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:background="@android:color/white"
-        android:orientation="vertical"
-        android:elevation="4dp"
-        android:layout_marginTop="30dp">
+            <LinearLayout
+                android:layout_height="200dp"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:elevation="4dp"
+                android:layout_marginTop="30dp">
 
 
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:indeterminate="true"
-            android:layout_centerHorizontal="true"/>
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="100dp"
+                    android:indeterminate="true"
+                    android:layout_centerHorizontal="true"/>
 
 
-        <TextView
-            android:id="@+id/subject_text"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Subject Combination"
-            android:layout_gravity="center"
-            android:layout_marginTop="-85dp"
-            android:textColor="@color/colorPrimaryDark"/>
+                <TextView
+                    android:id="@+id/subject_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Subject Combination"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-85dp"
+                    android:textColor="@color/colorPrimaryDark"/>
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="25dp"
-            android:src="@drawable/circle_number"/>
-
-
-        <TextView
-            android:id="@+id/subject1"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text=""
-            android:layout_marginLeft="45dp"
-            android:layout_marginTop="-18dp"
-            android:textColor="@color/colorPrimaryDark"/>
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:src="@drawable/circle_number"/>
 
 
-
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginTop="-2dp"
-            android:layout_marginLeft="25dp"
-            android:id="@+id/circle1"
-            android:src="@drawable/circle_number"/>
-
-        <TextView
-            android:id="@+id/subject2"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text=""
-            android:layout_marginLeft="45dp"
-            android:layout_marginTop="-18dp"
-            android:textColor="@color/colorPrimaryDark"/>
+                <TextView
+                    android:id="@+id/subject1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text=""
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="-18dp"
+                    android:textColor="@color/colorPrimaryDark"/>
 
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginTop="-2dp"
-            android:layout_marginLeft="25dp"
-            android:src="@drawable/circle_number"/>
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="-2dp"
+                    android:layout_marginLeft="25dp"
+                    android:id="@+id/circle1"
+                    android:src="@drawable/circle_number"/>
+
+                <TextView
+                    android:id="@+id/subject2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text=""
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="-18dp"
+                    android:textColor="@color/colorPrimaryDark"/>
 
 
-        <TextView
-            android:id="@+id/subject3"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text=""
-            android:layout_marginLeft="45dp"
-            android:layout_marginTop="-18dp"
-            android:textColor="@color/colorPrimaryDark"/>
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="-2dp"
+                    android:layout_marginLeft="25dp"
+                    android:src="@drawable/circle_number"/>
 
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="-2dp"
-            android:src="@drawable/circle_number" />
+                <TextView
+                    android:id="@+id/subject3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text=""
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="-18dp"
+                    android:textColor="@color/colorPrimaryDark"/>
 
 
-        <TextView
-            android:id="@+id/subject4"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text=""
-            android:layout_marginLeft="45dp"
-            android:layout_marginTop="-18dp"
-            android:textColor="@color/colorPrimaryDark"/>
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="-2dp"
+                    android:src="@drawable/circle_number" />
 
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/subject4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text=""
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="-18dp"
+                    android:textColor="@color/colorPrimaryDark"/>
 
 
-    <Button
-        android:id="@+id/subscription"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="Subsciption Inactive"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:background="@drawable/button"/>
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/subscription"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="Subsciption Inactive"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button"/>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
 
 
 </LinearLayout>

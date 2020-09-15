@@ -8,7 +8,7 @@
         <item
             android:id="@+id/take_exam"
             android:icon="@drawable/ic_edit_black_24dp"
-            android:title="Take Exam"
+            android:title="Take Test"
             app:itemIconTint="@color/colorPrimaryDark"
             />
         <item

@@ -5,17 +5,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <TextView
-        android:id="@+id/demo"
-        android:visibility="invisible"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_marginTop="30dp"
-        android:text="Demo" />
+
 
 
     <ScrollView
@@ -46,7 +36,17 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"/>
 
-
+            <TextView
+                android:id="@+id/demo"
+                android:visibility="invisible"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginTop="30dp"
+                android:text="Demo" />
 
             <ImageView
                 android:id="@+id/account"
@@ -55,7 +55,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
                 android:src="@drawable/ic_account_circle_black_24dp"
-                android:visibility="invisible"/>
+                android:visibility="visible"/>
 
 
             <TextView
@@ -67,7 +67,7 @@
                 android:text=""
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"
+                android:visibility="visible"
 
                 />
 
@@ -82,7 +82,7 @@
                 android:text=""
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"
+                android:visibility="visible"
                 />
 
             <TextView
@@ -95,7 +95,7 @@
                 android:text=""
                 android:layout_marginTop="40dp"
                 android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"
+                android:visibility="visible"
                 />
 
             <TextView
@@ -108,7 +108,7 @@
                 android:text=""
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"
+                android:visibility="visible"
                 />
 
 
@@ -122,7 +122,7 @@
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"
+                android:visibility="visible"
                 />
 
             <TextView
@@ -135,310 +135,68 @@
                 android:text=""
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"
+                android:visibility="visible"
                 />
 
-            <TextView
+            <Button
                 android:id="@+id/change_subject"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/paper4"
                 android:layout_marginLeft="100dp"
-                android:layout_marginTop="59dp"
+                android:background="@drawable/transparent_text"
+                android:layout_marginTop="30dp"
                 android:layout_centerHorizontal="true"
                 android:text="Change subject combination"
-                android:textColor="@android:color/black"
-                android:textSize="11sp"
-                android:visibility="invisible"/>
-
-
-
-            <TextView
-                android:id="@+id/selectSubject"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="20dp"
-                android:text="Select a new Subject combination"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                android:visibility="invisible"/>
-
-
-            <CheckBox
-                android:id="@+id/English"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/selectSubject"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="30dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="English Language"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-
-            <CheckBox
-                android:id="@+id/Maths"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/selectSubject"
-                android:layout_marginLeft="180dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="30dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="Mathematics"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-            <CheckBox
-                android:id="@+id/Physics"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/English"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="Physics"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-
-            <CheckBox
-                android:id="@+id/Chemistry"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/Maths"
-                android:layout_marginLeft="180dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="Chemistry"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-            <CheckBox
-                android:id="@+id/Biology"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/Physics"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="Biology"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-            <CheckBox
-                android:id="@+id/Commerce"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/Chemistry"
-                android:layout_marginLeft="180dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="4dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="Commerce"
-                android:buttonTint="@color/colorPrimaryDark"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="11sp"
                 android:visibility="invisible"/>
-
-
-            <CheckBox
-                android:id="@+id/Accounting"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/Biology"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="Accounting"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-
-            <CheckBox
-                android:id="@+id/Government"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/Commerce"
-                android:layout_marginLeft="180dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="Government"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-
-
-            <CheckBox
-                android:id="@+id/Economics"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/Accounting"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="Economics"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-
-            <CheckBox
-                android:id="@+id/Literature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/Government"
-                android:layout_marginLeft="180dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="Literature in English"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-
-            <CheckBox
-                android:id="@+id/Geography"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/Economics"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="Geography"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-
-            <CheckBox
-                android:id="@+id/Agric"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/Literature"
-                android:layout_marginLeft="180dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="Agricultural Sc."
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-
-            <CheckBox
-                android:id="@+id/History"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/Geography"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="History"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
-
-
-            <CheckBox
-                android:id="@+id/Crk"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_below="@+id/Agric"
-                android:layout_marginLeft="180dp"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="20dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:text="C.R.K"
-                android:textSize="11sp"
-                android:buttonTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark"
-                android:visibility="invisible"/>
-
 
 
             <Button
-                android:id="@+id/finished"
-                android:layout_width="160dp"
-                android:layout_height="50dp"
-                android:layout_below="@id/Crk"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="40dp"
+                android:id="@+id/take_demo_exam"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/change_subject"
+                android:layout_marginLeft="100dp"
+                android:background="@drawable/transparent_text"
+                android:layout_marginTop="30dp"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/button"
-                android:text="Finished"
-                android:textColor="@android:color/white"
-                android:visibility="invisible"/>
+                android:text="Take Demo Exam"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="11sp"
+                android:visibility="gone"/>
 
+            <TextView
+                android:id="@+id/instruction"
+                android:layout_height="wrap_content"
+                android:layout_width="250dp"
+                android:layout_below="@+id/take_demo_exam"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/transparent_text"
+                android:text="@string/instruction"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:visibility="gone"
+                />
 
             <Button
                 android:id="@+id/take_exam"
-                android:layout_width="160dp"
+                android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:layout_below="@id/change_subject"
+                android:layout_below="@id/instruction"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/button"
-                android:text="take exam"
+                android:text="take test"
                 android:textColor="@android:color/white"
-                android:visibility="invisible"/>
+                android:visibility="visible"/>
+
+
+
+
 
 
 

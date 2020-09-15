@@ -50,7 +50,7 @@ public class NavigationActivity extends AppCompatActivity
     Button submit;
 
     RelativeLayout layout;
-    ImageView reward;
+    ImageView reward, logo;
     TextView rewardText, notice, name;
     Button ok, takeDemo, subscribe;
 
@@ -63,7 +63,7 @@ public class NavigationActivity extends AppCompatActivity
     static final String userId = User.getUid();
 
     String subject, $answer, lastQuizDate, qSubject;
-    int coins, selectRadomSubject;
+    int coins, selectRadomSubject,  $remainingTests;
 
 
     private Typeface header, subheading;
@@ -129,6 +129,7 @@ public class NavigationActivity extends AppCompatActivity
 
         takeDemo = (Button) findViewById(R.id.take_demo);
         subscribe = (Button) findViewById(R.id.subscribe);
+        logo = (ImageView) findViewById(R.id.logo);
 
         notice = (TextView) findViewById(R.id.notice);
         notice.setVisibility(View.INVISIBLE);
@@ -225,6 +226,8 @@ public class NavigationActivity extends AppCompatActivity
                 String lastQuizSubject = String.valueOf(dataSnapshot.child(userId).child("lastQuizSubject").getValue());
                 String lastQuizQuestionNo = String.valueOf(dataSnapshot.child(userId).child("lastQuizQuestionNo").getValue());
                 String subsriptionValue = String.valueOf(dataSnapshot.child(userId).child("subscription").getValue());
+                $remainingTests = Integer.parseInt(String.valueOf(dataSnapshot.child(userId).child("remaining_subscription").getValue()));
+
 
                 Date currentDate = (Date) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("Africa/Lagos")).getTime();
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -242,10 +245,16 @@ public class NavigationActivity extends AppCompatActivity
                     if(subsriptionValue.equals("false")){
                         subscribe.setVisibility(View.VISIBLE);
                         takeDemo.setVisibility(View.VISIBLE);
+                        logo.setVisibility(View.VISIBLE);
                     }else{
-                        subscribe.setVisibility(View.INVISIBLE);
-                        takeDemo.setText("Take Exam");
+                        subscribe.setVisibility(View.VISIBLE);
+                        subscribe.setText($remainingTests + " Tests Remaining");
+                        subscribe.setBackground(getResources().getDrawable(R.drawable.transparent_text));
+                        subscribe.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                        subscribe.setEnabled(false);
+                        takeDemo.setText("Take Test");
                         takeDemo.setVisibility(View.VISIBLE);
+                        logo.setVisibility(View.VISIBLE);
                     }
 
                 }else{
@@ -263,7 +272,7 @@ public class NavigationActivity extends AppCompatActivity
         takeDemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(takeDemo.getText().equals("Take Exam")){
+                if(takeDemo.getText().equals(" Take Test")){
                     Intent intent = new Intent(NavigationActivity.this, TakeExamActivity.class);
                     intent.putExtra("demo",  "false");
                     startActivity(intent);
@@ -328,7 +337,7 @@ public class NavigationActivity extends AppCompatActivity
                     submit.setVisibility(View.INVISIBLE);
 
 
-                    users.child(userId).child("coins").setValue(String.valueOf(coins + 2));
+                    users.child(userId).child("coins").setValue(coins + 2);
                     users.child(userId).child("lastQuizDate").setValue(date);
                     users.child(userId).child("lastQuizSubject").setValue(qSubject);
                     users.child(userId).child("lastQuizQuestionNo").setValue("01");
@@ -389,6 +398,7 @@ public class NavigationActivity extends AppCompatActivity
 
                 takeDemo.setVisibility(View.VISIBLE);
                 subscribe.setVisibility(View.VISIBLE);
+                logo.setVisibility(View.VISIBLE);
 
                 title.setVisibility(View.INVISIBLE);
                 question.setVisibility(View.INVISIBLE);

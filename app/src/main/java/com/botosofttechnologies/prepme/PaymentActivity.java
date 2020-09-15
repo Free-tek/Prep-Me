@@ -43,11 +43,11 @@ public class PaymentActivity extends AppCompatActivity {
 
     EditText surname, firstName, cardNumber, cvv, expiry_date;
     ImageView cardValid, success, t1, t2, t3, t4, t5, back;
-    TextView /*text1, text2, text3, text4, text5,*/ successText;
+    TextView text1, text2, text3, text4, text5, successText;
     Button process;
     ProgressDialog progressDialog;
     private Card card;
-    int $count, amount;
+    int $count, amount, $remainingTests;
     String userId, $name, $phoneNo;
 
     FirebaseUser user;
@@ -118,11 +118,11 @@ public class PaymentActivity extends AppCompatActivity {
         t4 = (ImageView) findViewById(R.id.t4);
         t5 = (ImageView) findViewById(R.id.t5);
 
-        /*text1 = (TextView) findViewById(R.id.text1);
+        text1 = (TextView) findViewById(R.id.text1);
         text2 = (TextView) findViewById(R.id.text2);
         text3 = (TextView) findViewById(R.id.text3);
         text4 = (TextView) findViewById(R.id.text4);
-        text5 = (TextView) findViewById(R.id.text5);*/
+        text5 = (TextView) findViewById(R.id.text5);
         successText = (TextView) findViewById(R.id.successText);
 
         process = (Button) findViewById(R.id.process);
@@ -165,6 +165,11 @@ public class PaymentActivity extends AppCompatActivity {
                     if(card.isValid()){
                         cardValid.setImageDrawable(getResources().getDrawable(R.drawable.check));
                         process.setVisibility(View.VISIBLE);
+                        text1.setVisibility(View.INVISIBLE);
+                        text2.setVisibility(View.INVISIBLE);
+                        text3.setVisibility(View.INVISIBLE);
+                        text4.setVisibility(View.INVISIBLE);
+                        text5.setVisibility(View.INVISIBLE);
                     }else{
                         Toast.makeText(PaymentActivity.this, "please check card details and try again later", Toast.LENGTH_SHORT).show();
                     }
@@ -242,7 +247,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void performCharge() {
 
-        amount = 2000;
+        amount = 200000; //coverted to float .00 so charge is 2000
         Charge charge = new Charge();
         charge.setCard(card);
         charge.setEmail("adewole63@gmail.com");
@@ -279,6 +284,20 @@ public class PaymentActivity extends AppCompatActivity {
                 final String $userId = user.getUid();
 
                 users.child($userId).child("subscription").setValue(true);
+                users.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        $remainingTests = Integer.parseInt(String.valueOf(dataSnapshot.child(userId).child("remaining_subscription").getValue()));
+                        users.child($userId).child("remaining_subscription").setValue($remainingTests + 5);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                //
 
                 Date currentDate = (Date) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("Africa/Lagos")).getTime();
 
@@ -316,7 +335,7 @@ public class PaymentActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable error, Transaction transaction) {
-                Toast.makeText(PaymentActivity.this, "Payment was unsuccessful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PaymentActivity.this, "Payment was unsuccessful, check card details and try again", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });
@@ -329,30 +348,37 @@ public class PaymentActivity extends AppCompatActivity {
 
         if(surname.getText().length() == 0 ){
             Toast.makeText(this, "Surname cannot be empty", Toast.LENGTH_SHORT).show();
-            valid = false;
-        }else if(firstName.getText().length() == 0 )if(surname.getText().length() == 0 ){
-            Toast.makeText(this, "Firstname cannot be empty", Toast.LENGTH_SHORT).show();
-            valid = false;
-        }else if(cardNumber.getText().length() != 16 )if(surname.getText().length() == 0 ){
-            Toast.makeText(this, "Invalid card number", Toast.LENGTH_SHORT).show();
-            valid = false;
-        }else if(cvv.getText().length() != 3 ){
-            Toast.makeText(this, "Invalid CVV", Toast.LENGTH_SHORT).show();
-            valid = false;
-        }else if(expiry_date.getText().length() != 5){
-            Toast.makeText(PaymentActivity.this, "Invalid expiry date use mm/yy format", Toast.LENGTH_SHORT).show();
-            valid = false;
-        }else if(!(String.valueOf(expiry_date.getText().charAt(2)).equals("/")) ){
-            Toast.makeText(PaymentActivity.this, "Invalid expiry date use mm/yy format", Toast.LENGTH_SHORT).show();
-            valid = false;
-        }else if(!(String.valueOf(expiry_date.getText()).substring(0,2).matches("[0-9]+"))){
-            Toast.makeText(PaymentActivity.this, "Invalid expiry date use mm/yy format", Toast.LENGTH_SHORT).show();
-            valid = false;
-        }else if (!(String.valueOf(expiry_date.getText()).substring(3,5).matches("[0-9]+"))){
-            Toast.makeText(PaymentActivity.this, "Invalid expiry date use mm/yy format", Toast.LENGTH_SHORT).show();
-            valid = false;
+            return false;
         }
-        return valid;
+        if(firstName.getText().length() == 0 )if(surname.getText().length() == 0 ){
+            Toast.makeText(this, "Firstname cannot be empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(cardNumber.getText().length() != 16 )if(surname.getText().length() == 0 ){
+            Toast.makeText(this, "Invalid card number", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(cvv.getText().length() != 3 ){
+            Toast.makeText(this, "Invalid CVV", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(expiry_date.getText().length() != 5){
+            Toast.makeText(PaymentActivity.this, "Invalid expiry date use mm/yy format", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!(String.valueOf(expiry_date.getText().charAt(2)).equals("/")) ){
+            Toast.makeText(PaymentActivity.this, "Invalid expiry date use mm/yy format", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!(String.valueOf(expiry_date.getText()).substring(0,2).matches("[0-9]+"))){
+            Toast.makeText(PaymentActivity.this, "Invalid expiry date use mm/yy format", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!(String.valueOf(expiry_date.getText()).substring(3,5).matches("[0-9]+"))){
+            Toast.makeText(PaymentActivity.this, "Invalid expiry date use mm/yy format", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
 

@@ -28,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     ProgressBar progressBar;
     TextView stars, name, email, subject1, subject2, subject3, subject4, subject_text;
     Button subscription;
-    String $subscriptionStatus, $coins, $email, $name, $subject1, $subject2, $subject3, $subject4;
+    String $subscriptionStatus, $coins, $email, $name, $subject1, $subject2, $subject3, $subject4, $remainingTests;
 
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -86,10 +86,11 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        users.addValueEventListener(new ValueEventListener() {
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 $subscriptionStatus = String.valueOf(dataSnapshot.child(userId).child("subscription").getValue());
+                $remainingTests = String.valueOf(dataSnapshot.child(userId).child("remaining_subscription").getValue());
                 $coins = String.valueOf(dataSnapshot.child(userId).child("coins").getValue());
                 $email = String.valueOf(dataSnapshot.child(userId).child("email").getValue());
                 $name = String.valueOf(dataSnapshot.child(userId).child("name").getValue());
@@ -101,8 +102,9 @@ public class ProfileActivity extends AppCompatActivity {
 
 
                 if($subscriptionStatus.equals("true")){
+                    subscription.setText($remainingTests + " Tests Remaining");
                     subscription.setVisibility(View.VISIBLE);
-                    subscription.setText("Subscripiton Active");
+                    //subscription.setText("Subscripiton Active");
 
                 }else{
                     subscription.setVisibility(View.VISIBLE);
