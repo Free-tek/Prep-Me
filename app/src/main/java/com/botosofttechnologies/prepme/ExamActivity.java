@@ -11,9 +11,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,31 +28,50 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+
+import java.util.stream.*;
+import java.util.Random;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 
 public class ExamActivity extends AppCompatActivity {
 
     //TODO: chage subscription and remaining_test afterwards
-    TextView number, time, question, instruction, demo;
+    //TODO: Handle network switch off
+    TextView number, time, question, instruction, demo, comprehension;
     RadioGroup radioGroup;
     RadioButton optionA, optionB, optionC, optionD;
     Button submit;
-    int paper1Count, paper2Count, paper3Count, paper4Count;
+    int paper1Count, paper2Count, paper3Count, paper4Count, totalComprehesionBatchSize;
     int currentPaper1Count, currentPaper2Count, currentPaper3Count, currentPaper4Count, currentPaper;
     String paper1, paper2, paper3, paper4, answer, examNo, studentName, _demo;
+    RelativeLayout more;
+    ImageView questionImage;
 
-    int[] englishQ = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int[] _paper2 = { 1, 2, 3, 4, 5};
-    int[] _paper3 = { 1, 2, 3, 4, 5};
-    int[] _paper4 = { 1, 2, 3, 4, 5};
-    int[] _paper5 = { 1, 2, 3, 4, 5};
+    int comprehensionQuestionCount, comprehensionType;
+
+    ArrayList<Integer> englishQ;
+    ArrayList<Integer> _paper2;
+    ArrayList<Integer> _paper3;
+    ArrayList<Integer> _paper4;
+
+    //int[] englishQ = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    //int[] _paper2 = { 1, 2, 3, 4, 5};
+    //int[] _paper3 = { 1, 2, 3, 4, 5};
+    //int[] _paper4 = { 1, 2, 3, 4, 5};
+
+
 
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     final DatabaseReference users = database.getReference().child("users");
+    final DatabaseReference leaderboard = database.getReference().child("leader_board");
+
     DatabaseReference paper1db;
+    DatabaseReference paper1dbComprehesion;
     DatabaseReference paper2db;
     DatabaseReference paper3db;
     DatabaseReference paper4db;
@@ -79,25 +101,64 @@ public class ExamActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /*for (int i = 0; i < englishQ.length; i++) {
-            englishQ[i] = i+1;
-            Collections.shuffle(Arrays.asList(englishQ));
+
+        //TODO:Number of  questions per paper
+        /*if(_demo.equals("true")){
+            // a demo test
+            paper1Count = 7; //60
+            paper2Count = 3; //40
+            paper3Count = 3; //40
+            paper4Count = 3; //40
+
+            getQuestionNo();
+            //time for demo 10 minutes
+            timerStart(600000);
+        }else{
+            //not a demo test
+            paper1Count = 25;
+            paper2Count = 15;
+            paper3Count = 15;
+            paper4Count = 15;
+
+            getQuestionNo();
+            //time for exam 60 minutes
+            timerStart(3600000);
 
         }
 
-        for (int i = 0; i < _paper2.length; i++) {
-            _paper2[i] = i+1;
-            _paper3[i] = i+1;
-            _paper4[i] = i+1;
-            Collections.shuffle(Arrays.asList(_paper2));
-            Collections.shuffle(Arrays.asList(_paper3));
-            Collections.shuffle(Arrays.asList(_paper4));
-        }
-*/
-        Collections.shuffle(Arrays.asList(englishQ));
-        Collections.shuffle(Arrays.asList(_paper2));
-        Collections.shuffle(Arrays.asList(_paper3));
-        Collections.shuffle(Arrays.asList(_paper4));
+
+        englishQ = getRandomNonRepeatingIntegers(paper1Count, 1, 250);
+        _paper2 = getRandomNonRepeatingIntegers(paper2Count, 1, 250);
+        _paper3 = getRandomNonRepeatingIntegers(paper3Count, 1, 250);
+        _paper4 = getRandomNonRepeatingIntegers(paper4Count, 1, 250);
+
+        */
+
+        //TODO: Change this  to the total number of comprehesion passages you have
+        totalComprehesionBatchSize = 1;
+
+        //TODO: remove test
+        paper1Count = 7;
+        paper2Count = 3;
+        paper3Count = 3;
+        paper4Count = 3;
+        timerStart(600000);
+
+        englishQ = getRandomNonRepeatingIntegers(paper1Count, 1, 10);
+        _paper2 = getRandomNonRepeatingIntegers(paper2Count, 1, 5);
+        _paper3 = getRandomNonRepeatingIntegers(paper3Count, 1, 5);
+        _paper4 = getRandomNonRepeatingIntegers(paper4Count, 1, 5);
+
+
+
+
+        Log.e("shuffle", "paper1 ::: " + englishQ + "paper2 ::: " + _paper2 + "paper3 ::: " + _paper3 + "paper4 ::: " + _paper4);
+        //Stop deletion
+
+        Collections.shuffle(englishQ);
+        Collections.shuffle(_paper2);
+        Collections.shuffle(_paper3);
+        Collections.shuffle(_paper4);
 
         Bundle bundle = getIntent().getExtras();
         paper2 = bundle.getString("paper2");
@@ -107,11 +168,12 @@ public class ExamActivity extends AppCompatActivity {
         studentName = bundle.getString("studentName");
         _demo = bundle.getString("demo");
 
-        String $paper2 = "test"+paper2;
-        String $paper3 = "test"+paper3;
-        String $paper4 = "test"+paper4;
+        String $paper2 = "m"+paper2;
+        String $paper3 = "m"+paper3;
+        String $paper4 = "m"+paper4;
 
-        paper1db = database.getReference().child("testEnglish Language");
+        paper1db = database.getReference().child("mEnglish Language");
+        paper1dbComprehesion = database.getReference().child("mEnglish LanguageComprehension");
         paper2db = database.getReference().child($paper2);
         paper3db = database.getReference().child($paper3);
         paper4db = database.getReference().child($paper4);
@@ -127,10 +189,34 @@ public class ExamActivity extends AppCompatActivity {
         scorePaper3 = 0;
         scorePaper4 = 0;
 
+        comprehensionQuestionCount = 0;
+
         initUi();
+        getQuestionNo();
+
+        if(!_demo.equals("true")){
+            users.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int $remainingSubscription = Integer.parseInt(String.valueOf(dataSnapshot.child(userId).child("remaining_subscription").getValue()));
+                    users.child(userId).child("remaining_subscription").setValue($remainingSubscription - 1);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
     }
 
     private void initUi() {
+
+        more = (RelativeLayout) findViewById(R.id.more);
+        questionImage = (ImageView) findViewById(R.id.question_image);
+        comprehension = (TextView) findViewById(R.id.comprehension);
+
         progressBar = (ProgressBar)findViewById(R.id.progress);
         Wave mWave = new Wave();
         mWave.setBounds(0,0,100,100);
@@ -225,38 +311,12 @@ public class ExamActivity extends AppCompatActivity {
 
         submit = (Button) findViewById(R.id.submit);
 
-        //TODO:Number of  questions per paper
-        if(_demo.equals("true")){
-            // a demo test
-            paper1Count = 7; //60
-            paper2Count = 3; //40
-            paper3Count = 3; //40
-            paper4Count = 3; //40
-
-            getQuestionNo();
-            //time for demo 10 minutes
-            timerStart(600000);
-        }else{
-            //not a demo test
-            paper1Count = 25;
-            paper2Count = 15;
-            paper3Count = 15;
-            paper4Count = 15;
-
-            getQuestionNo();
-            //time for exam 60 minutes
-            timerStart(3600000);
-
-        }
-
-
-
-
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timerPause();
+
                 String selectedAnswer = getOptionSelected();
                 if(selectedAnswer == null){
 
@@ -273,8 +333,9 @@ public class ExamActivity extends AppCompatActivity {
 
 
                     alertDialog.show();
-                }//last question
-                else if(currentPaper1Count == 10 && currentPaper2Count == 5 && currentPaper3Count == 5 && currentPaper4Count == 5){
+                }//last demo question
+
+                else if(currentPaper1Count == paper1Count && currentPaper2Count == paper2Count && currentPaper3Count == paper3Count && currentPaper4Count == paper4Count){
                     //Intent to final score page because this is the last question;
 
                     //check if user passed the question or not
@@ -288,17 +349,22 @@ public class ExamActivity extends AppCompatActivity {
                         scorePaper4 ++;
                     }else{
                         //User failed the question
-                        optionA.setChecked(true);
+                        //optionA.setChecked(true);
                     }
 
                     progressBar.setVisibility(View.VISIBLE);
                     String total = String.valueOf(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
-                    users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
-                    users.child(userId).child("currentExam").child(paper2).setValue(scorePaper2);
-                    users.child(userId).child("currentExam").child(paper3).setValue(scorePaper3);
-                    users.child(userId).child("currentExam").child(paper4).setValue(scorePaper4);
-                    users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
 
+
+                    if(!_demo.equals("true")){
+                        //save users score
+                        users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
+                        users.child(userId).child("currentExam").child(paper2).setValue(scorePaper2);
+                        users.child(userId).child("currentExam").child(paper3).setValue(scorePaper3);
+                        users.child(userId).child("currentExam").child(paper4).setValue(scorePaper4);
+                        users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
+
+                    }
 
                     Intent intent = new Intent(ExamActivity.this, ExamScoreActivity.class);
                     intent.putExtra("total", total);
@@ -319,11 +385,14 @@ public class ExamActivity extends AppCompatActivity {
                 }//not the last question
                 else{
 
+
+
+
                     if(currentPaper == 1 && selectedAnswer.equals(answer)){
                         scorePaper1 ++;
                         progressBar.setVisibility(View.VISIBLE);
 
-                        optionA.setChecked(true);
+                        //optionA.setChecked(true);
 
 
 
@@ -332,7 +401,7 @@ public class ExamActivity extends AppCompatActivity {
                         scorePaper2 ++;
                         progressBar.setVisibility(View.VISIBLE);
 
-                        optionA.setChecked(true);
+                        //optionA.setChecked(true);
 
 
                         getQuestionNo();
@@ -340,7 +409,7 @@ public class ExamActivity extends AppCompatActivity {
                         scorePaper3 ++;
                         progressBar.setVisibility(View.VISIBLE);
 
-                        optionA.setChecked(true);
+                        //optionA.setChecked(true);
 
 
                         getQuestionNo();
@@ -348,17 +417,42 @@ public class ExamActivity extends AppCompatActivity {
                         scorePaper4 ++;
                         progressBar.setVisibility(View.VISIBLE);
 
-                        optionA.setChecked(true);
+                        //optionA.setChecked(true);
 
 
                         getQuestionNo();
                     }else{
                         //User failed the question
-                        optionA.setChecked(true);
+                        //optionA.setChecked(true);
 
                         progressBar.setVisibility(View.VISIBLE);
+
                         getQuestionNo();
                     }
+
+                    //save users score just incase the test cancels provided it is not a demo test
+
+                    if(!_demo.equals("true")){
+                        users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
+                        users.child(userId).child("currentExam").child(paper2).setValue(scorePaper2);
+                        users.child(userId).child("currentExam").child(paper3).setValue(scorePaper3);
+                        users.child(userId).child("currentExam").child(paper4).setValue(scorePaper4);
+                        users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
+                    }
+
+
+                    optionA.setBackground(getResources().getDrawable(R.drawable.transparent_text));
+                    optionB.setBackground(getResources().getDrawable(R.drawable.transparent_text));
+                    optionC.setBackground(getResources().getDrawable(R.drawable.transparent_text));
+                    optionD.setBackground(getResources().getDrawable(R.drawable.transparent_text));
+
+                    optionA.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    optionB.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    optionC.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    optionD.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
+                    more.scrollTo(0, 0);
+
                 }
 
             }
@@ -367,46 +461,177 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     private void getQuestion(final int questionNo, final int paperNo) {
+
+        Log.e("result", "" + questionNo + " ::: " + paperNo);
+        radioGroup.clearCheck();
+
         if(paperNo == 1){
-            paper1db.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String mquestion = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("question").getValue());
-                    String moptionA = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionA").getValue());
-                    String moptionB = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionB").getValue());
-                    String moptionC = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionC").getValue());
-                    String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionD").getValue());
-                    String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue()).toLowerCase();
-                    String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("instruction").getValue());
+
+            if(comprehensionQuestionCount ==  0 && !_demo.equals("true")){
+
+                //select comprehension passage type
+                comprehensionType = (int) (Math.random() * totalComprehesionBatchSize) + 1;
+
+                comprehensionQuestionCount = (comprehensionType * 5) - 4;
+
+                //user has not answered comprehension questions
+                paper1dbComprehesion.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String mquestion = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("question").getValue());
+                        String moptionA = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("optionA").getValue());
+                        String moptionB = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("optionB").getValue());
+                        String moptionC = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("optionC").getValue());
+                        String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("optionD").getValue());
+                        String manswer = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("answer").getValue()).toLowerCase();
+                        String mcomprehension = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("comprehension").getValue());
+                        String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("instruction").getValue());
 
 
-                    //number.setText(String.valueOf(currentPaper1Count));
-                    question.setText(mquestion);
-                    optionA.setText(moptionA);
-                    optionB.setText(moptionB);
-                    optionC.setText(moptionC);
-                    optionD.setText(moptionD);
-                    instruction.setText(minstruction);
-                    answer = manswer;
+                        //number.setText(String.valueOf(currentPaper1Count));
+                        question.setText(mquestion);
+                        optionA.setText(moptionA);
+                        optionB.setText(moptionB);
+                        optionC.setText(moptionC);
+                        optionD.setText(moptionD);
 
-                    if(minstruction.equals("")){
-                        instruction.setVisibility(View.GONE);
-                    }else{
-                        instruction.setVisibility(View.VISIBLE);
+
+                        instruction.setText(minstruction);
+                        answer = manswer;
+
+                        //Configure comprehension
+                        more.setVisibility(View.VISIBLE);
+                        comprehension.setVisibility(View.VISIBLE);
+                        questionImage.setVisibility(View.INVISIBLE);
+                        comprehension.setText(mcomprehension);
+
+
+                        if(minstruction.equals("")){
+                            instruction.setVisibility(View.GONE);
+                        }else{
+                            instruction.setVisibility(View.VISIBLE);
+                        }
+
+                        currentPaper = 1;
+                        comprehensionQuestionCount ++;
+                        progressBar.setVisibility(View.INVISIBLE);
+                        timerResume();
+
+
                     }
 
-                    currentPaper = 1;
-                    progressBar.setVisibility(View.INVISIBLE);
-                    timerResume();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
 
-                }
+            }else if (comprehensionQuestionCount <= 4 && !_demo.equals("true")){
+                //user has answered first comprehension question
+                paper1dbComprehesion.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String mquestion = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("question").getValue());
+                        String moptionA = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("optionA").getValue());
+                        String moptionB = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("optionB").getValue());
+                        String moptionC = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("optionC").getValue());
+                        String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("optionD").getValue());
+                        String manswer = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("answer").getValue()).toLowerCase();
+                        String mcomprehension = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("comprehension").getValue());
+                        String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(comprehensionQuestionCount)).child("instruction").getValue());
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+                        //number.setText(String.valueOf(currentPaper1Count));
+                        question.setText(mquestion);
+                        optionA.setText(moptionA);
+                        optionB.setText(moptionB);
+                        optionC.setText(moptionC);
+                        optionD.setText(moptionD);
+
+
+                        instruction.setText(minstruction);
+                        answer = manswer;
+
+                        //Configure comprehension
+                        more.setVisibility(View.VISIBLE);
+                        comprehension.setVisibility(View.VISIBLE);
+                        questionImage.setVisibility(View.INVISIBLE);
+                        comprehension.setText(mcomprehension);
+
+
+                        if(minstruction.equals("")){
+                            instruction.setVisibility(View.GONE);
+                        }else{
+                            instruction.setVisibility(View.VISIBLE);
+                        }
+
+                        currentPaper = 1;
+                        comprehensionQuestionCount ++;
+                        progressBar.setVisibility(View.INVISIBLE);
+                        timerResume();
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }else{
+
+                //not a comprehension passage question
+                //TODO: show english comprehesion
+                paper1db.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String mquestion = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("question").getValue());
+                        String moptionA = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionA").getValue());
+                        String moptionB = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionB").getValue());
+                        String moptionC = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionC").getValue());
+                        String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionD").getValue());
+                        String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue()).toLowerCase();
+                        String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("instruction").getValue());
+
+
+                        //number.setText(String.valueOf(currentPaper1Count));
+                        question.setText(mquestion);
+                        optionA.setText(moptionA);
+                        optionB.setText(moptionB);
+                        optionC.setText(moptionC);
+                        optionD.setText(moptionD);
+
+                        more.setVisibility(View.GONE);
+
+
+                        instruction.setText(minstruction);
+                        answer = manswer;
+
+                        if(minstruction.equals("")){
+                            instruction.setVisibility(View.GONE);
+                        }else{
+                            instruction.setVisibility(View.VISIBLE);
+                        }
+
+                        currentPaper = 1;
+                        progressBar.setVisibility(View.INVISIBLE);
+                        timerResume();
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+
         }else if(paperNo == 2){
 
             paper2db.addValueEventListener(new ValueEventListener() {
@@ -419,6 +644,7 @@ public class ExamActivity extends AppCompatActivity {
                     String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionD").getValue());
                     String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue()).toLowerCase();
                     String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("instruction").getValue());
+                    String mimageUrl = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("image").getValue());
 
                     //number.setText(String.valueOf(currentPaper2Count));
                     question.setText(mquestion);
@@ -429,6 +655,23 @@ public class ExamActivity extends AppCompatActivity {
                     instruction.setText(minstruction);
 
                     answer = manswer;
+
+                    if(minstruction.equals("")){
+                        instruction.setVisibility(View.GONE);
+                    }else{
+                        instruction.setVisibility(View.VISIBLE);
+                    }
+
+                    if (mimageUrl.length() >= 10){
+                        //question has an image
+                        more.setVisibility(View.VISIBLE);
+                        comprehension.setVisibility(View.INVISIBLE);
+                        Picasso.with(ExamActivity.this).load(mimageUrl).into(questionImage);
+                        questionImage.setVisibility(View.VISIBLE);
+
+                    }else{
+                        more.setVisibility(View.GONE);
+                    }
 
                     currentPaper = 2;
                     progressBar.setVisibility(View.INVISIBLE);
@@ -453,6 +696,7 @@ public class ExamActivity extends AppCompatActivity {
                     String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionD").getValue());
                     String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue()).toLowerCase();
                     String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("instruction").getValue());
+                    String mimageUrl = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("image").getValue());
 
 
                     //number.setText(String.valueOf(currentPaper3Count));
@@ -469,6 +713,19 @@ public class ExamActivity extends AppCompatActivity {
                     }else{
                         instruction.setVisibility(View.VISIBLE);
                     }
+
+
+                    if (mimageUrl.length() >= 10){
+                        //question has an image
+                        more.setVisibility(View.VISIBLE);
+                        comprehension.setVisibility(View.INVISIBLE);
+                        Picasso.with(ExamActivity.this).load(mimageUrl).into(questionImage);
+                        questionImage.setVisibility(View.VISIBLE);
+
+                    }else{
+                        more.setVisibility(View.GONE);
+                    }
+
 
                     currentPaper = 3;
                     progressBar.setVisibility(View.INVISIBLE);
@@ -494,6 +751,7 @@ public class ExamActivity extends AppCompatActivity {
                     String moptionD = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("optionD").getValue());
                     String manswer = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("answer").getValue()).toLowerCase();
                     String minstruction = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("instruction").getValue());
+                    String mimageUrl = String.valueOf(dataSnapshot.child(String.valueOf(questionNo)).child("image").getValue());
 
 
                     //number.setText(String.valueOf(currentPaper4Count));
@@ -511,6 +769,18 @@ public class ExamActivity extends AppCompatActivity {
                         instruction.setVisibility(View.VISIBLE);
                     }
 
+
+                    if (mimageUrl.length() >= 10){
+                        //question has an image
+                        more.setVisibility(View.VISIBLE);
+                        comprehension.setVisibility(View.INVISIBLE);
+                        Picasso.with(ExamActivity.this).load(mimageUrl).into(questionImage);
+                        questionImage.setVisibility(View.VISIBLE);
+
+                    }else{
+                        more.setVisibility(View.GONE);
+                    }
+
                     currentPaper = 4;
                     progressBar.setVisibility(View.INVISIBLE);
                     timerResume();
@@ -526,60 +796,41 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     private void getQuestionNo() {
+
         //get random question number first
         int questionNoPaper1 = (int) (10 * Math.random()) + 1;
         int questionNoPaper = (int) (5 * Math.random()) + 1;
 
 
-        if(currentPaper1Count != 10){
-            getQuestion(englishQ[0], 1);
-            englishQ = removeTheElement(englishQ, 0);
+        if(currentPaper1Count != paper1Count){
+            getQuestion(englishQ.get(0), 1);
+            englishQ.remove(0);
+            //englishQ = removeTheElement(englishQ, 0);
             //removeItems(englishQ, 0);
             currentPaper1Count++;
             return;
-        }else if(currentPaper2Count != 5){
-            getQuestion(_paper2[0], 2);
-            _paper2 = removeTheElement(_paper2, 0);
+        }else if(currentPaper2Count != paper2Count){
+            getQuestion(_paper2.get(0), 2);
+            _paper2.remove(0);
+            //_paper2 = removeTheElement(_paper2, 0);
             //removeItems(_paper2, 0);
             currentPaper2Count++;
             return;
-        }else if(currentPaper3Count != 5){
-            getQuestion(_paper3[0], 3);
-            _paper3 = removeTheElement(_paper3, 0);
+        }else if(currentPaper3Count != paper3Count){
+            getQuestion(_paper3.get(0), 3);
+            _paper3.remove(0);
+            //_paper3 = removeTheElement(_paper3, 0);
             //removeItems(_paper3, 0);
             currentPaper3Count++;
             return;
-        }else if(currentPaper4Count != 5){
-            getQuestion(_paper4[0], 4);
-            _paper4 = removeTheElement(_paper4, 0);
+        }else if(currentPaper4Count != paper4Count){
+            getQuestion(_paper4.get(0), 4);
+            _paper4.remove(0);
+            //_paper4 = removeTheElement(_paper4, 0);
             //removeItems(_paper4, 0);
             currentPaper4Count++;
             return;
         }
-
-        /*if(currentPaper1Count < 10 && !contains(paper1QuestionsArray,questionNoPaper1)){
-            currentPaper1Count++;
-            paper1QuestionsArray = addElement(paper1QuestionsArray, questionNoPaper1);
-            getQuestion(questionNoPaper1, 1);
-            return;
-        }else if(currentPaper2Count < 5 && !contains(paper2QuestionsArray,questionNoPaper)){
-            currentPaper2Count++;
-            paper2QuestionsArray = addElement(paper2QuestionsArray, questionNoPaper);
-            getQuestion(questionNoPaper, 2);
-            return;
-        }else if(currentPaper3Count < 5 && !contains(paper3QuestionsArray,questionNoPaper)){
-            currentPaper3Count++;
-            paper3QuestionsArray = addElement(paper3QuestionsArray, questionNoPaper);
-            getQuestion(questionNoPaper, 3);
-            return;
-        }else if(currentPaper4Count < 5 && !contains(paper4QuestionsArray,questionNoPaper)){
-            currentPaper4Count++;
-            paper4QuestionsArray = addElement(paper4QuestionsArray, questionNoPaper);
-            getQuestion(questionNoPaper, 4);
-            return;
-        }else{
-            getQuestionNo();
-        }*/
 
         Log.e("error", "repeated question" );
     }
@@ -670,21 +921,89 @@ public class ExamActivity extends AppCompatActivity {
                 milliLeft = milliTillFinish;
                 long min = (milliTillFinish / (1000 * 60));
                 int seconds = (int) (milliTillFinish / 1000) % 60 ;
-                int minutes = (int) ((milliTillFinish / (1000*60)) % 60);
+                int minutes = (int) ((milliTillFinish / (1000*60)));
                 int hours   = (int) ((milliTillFinish / (1000*60*60)) % 24);
 
-                String $time = hours + ":" + minutes;
+                String $time = "" + minutes;
                 time.setText($time);
+
+                if(minutes == 5){
+                    time.setBackground(getResources().getDrawable(R.drawable.circle_number_red));
+                }
             }
 
             @Override
             public void onFinish() {
                 //time has finished lets tell test taker that his time is up and pass him to the next Intent
+
+                //save users score  if it  is not a demo test
+                if(!_demo.equals("true")){
+                    users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
+                    users.child(userId).child("currentExam").child(paper2).setValue(scorePaper2);
+                    users.child(userId).child("currentExam").child(paper3).setValue(scorePaper3);
+                    users.child(userId).child("currentExam").child(paper4).setValue(scorePaper4);
+                    users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
+
+
+                    users.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String lbcount = String.valueOf(dataSnapshot.child(userId).child("lbKey").getValue());
+                            leaderboard.child(lbcount).child("star").setValue(String.valueOf(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+
+
+
+                Intent intent = new Intent(ExamActivity.this, ExamScoreActivity.class);
+                intent.putExtra("total", scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
+                intent.putExtra("paper1", "English Language" );
+                intent.putExtra("paper2", paper2 );
+                intent.putExtra("paper3", paper3 );
+                intent.putExtra("paper4", paper4 );
+                intent.putExtra("paper1score", String.valueOf(scorePaper1));
+                intent.putExtra("paper2score", String.valueOf(scorePaper2));
+                intent.putExtra("paper3score", String.valueOf(scorePaper3) );
+                intent.putExtra("paper4score", String.valueOf(scorePaper4) );
+                intent.putExtra("ExamNo", examNo );
+                intent.putExtra("StudentName", studentName );
+                intent.putExtra("demo", _demo );
+                progressBar.setVisibility(View.INVISIBLE);
+                startActivity(intent);
             }
 
         };
         timer.start();
     }
+
+    public static int getRandomInt(int min, int max) {
+        Random random = new Random();
+
+        return random.nextInt((max - min) + 1) + min;
+    }
+
+    public static ArrayList<Integer> getRandomNonRepeatingIntegers(int size, int min,
+                                                                   int max) {
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+
+        while (numbers.size() < size) {
+            int random = getRandomInt(min, max);
+
+            if (!numbers.contains(random)) {
+                numbers.add(random);
+            }
+        }
+
+        return numbers;
+    }
+
 
     public void timerPause() {
         timer.cancel();

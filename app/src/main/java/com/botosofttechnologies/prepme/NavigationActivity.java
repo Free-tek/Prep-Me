@@ -62,7 +62,7 @@ public class NavigationActivity extends AppCompatActivity
     static FirebaseUser User = mAuth.getCurrentUser();
     static final String userId = User.getUid();
 
-    String subject, $answer, lastQuizDate, qSubject;
+    String subject, $answer, lastQuizDate, qSubject, $subscritpionCheck;
     int coins, selectRadomSubject,  $remainingTests;
 
 
@@ -88,11 +88,13 @@ public class NavigationActivity extends AppCompatActivity
 
         initUi();
 
+        $subscritpionCheck = "false";
+
     }
 
 
     private void initUi() {
-        progressBar = (ProgressBar)findViewById(R.id.progress);
+        progressBar = (ProgressBar) findViewById(R.id.progress);
         Wave mWave = new Wave();
         mWave.setBounds(0,0,100,100);
         mWave.setColor(R.color.colorPrimaryDark);
@@ -228,6 +230,8 @@ public class NavigationActivity extends AppCompatActivity
                 String subsriptionValue = String.valueOf(dataSnapshot.child(userId).child("subscription").getValue());
                 $remainingTests = Integer.parseInt(String.valueOf(dataSnapshot.child(userId).child("remaining_subscription").getValue()));
 
+                $subscritpionCheck = subsriptionValue;
+
 
                 Date currentDate = (Date) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("Africa/Lagos")).getTime();
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -272,16 +276,17 @@ public class NavigationActivity extends AppCompatActivity
         takeDemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(takeDemo.getText().equals(" Take Test")){
+
+                if($subscritpionCheck.equals("true")){
                     Intent intent = new Intent(NavigationActivity.this, TakeExamActivity.class);
                     intent.putExtra("demo",  "false");
                     startActivity(intent);
                 }else{
-                    //TODO: take user to take demo activity
                     Intent intent = new Intent(NavigationActivity.this, TakeExamActivity.class);
-                    intent.putExtra("demo",  "true");
+                    intent.putExtra("demo",  "false");
                     startActivity(intent);
                 }
+
 
             }
         });
@@ -337,7 +342,7 @@ public class NavigationActivity extends AppCompatActivity
                     submit.setVisibility(View.INVISIBLE);
 
 
-                    users.child(userId).child("coins").setValue(coins + 2);
+                    //users.child(userId).child("coins").setValue(coins + 2);
                     users.child(userId).child("lastQuizDate").setValue(date);
                     users.child(userId).child("lastQuizSubject").setValue(qSubject);
                     users.child(userId).child("lastQuizQuestionNo").setValue("01");
@@ -640,9 +645,15 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.take_exam) {
-            Intent intent = new Intent(NavigationActivity.this, TakeExamActivity.class);
-            intent.putExtra("demo",  "false");
-            startActivity(intent);
+            if($subscritpionCheck.equals("true")){
+                Intent intent = new Intent(NavigationActivity.this, TakeExamActivity.class);
+                intent.putExtra("demo",  "false");
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(NavigationActivity.this, TakeExamActivity.class);
+                intent.putExtra("demo",  "false");
+                startActivity(intent);
+            }
         } else if (id == R.id.leaderboard) {
             Intent intent = new Intent(NavigationActivity.this, LeaderBoardActivity.class);
             startActivity(intent);

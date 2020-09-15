@@ -94,7 +94,12 @@ public class LeaderBoardActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 dataSnapshot.child(userId).child("lbKey").getValue();
                 $name = String.valueOf(dataSnapshot.child(userId).child("name").getValue());
-                $star = String.valueOf(dataSnapshot.child(userId).child("coins").getValue());
+                $star = String.valueOf(dataSnapshot.child(userId).child("currentExamTotal").child("total").getValue());
+
+                String lbcount = String.valueOf(dataSnapshot.child(userId).child("lbKey").getValue());
+                int score = Integer.parseInt(String.valueOf(dataSnapshot.child(userId).child("currentExamTotal").child("total").getValue()));
+                Leaderboard.child(lbcount).child("star").setValue(score);
+
 
                 name.setText($name);
                 star.setText($star);

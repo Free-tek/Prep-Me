@@ -194,30 +194,29 @@
 
 
             <Button
-                android:id="@+id/saveImage"
-                android:visibility="visible"
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="70dp"
-                android:layout_below="@+id/paper4"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/button"
-                android:text="save image"
-                android:textColor="@android:color/white"
-                />
-
-
-
-            <Button
                 android:id="@+id/subscribe"
                 android:visibility="visible"
-                android:layout_width="wrap_content"
+                android:layout_width="170dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="30dp"
-                android:layout_below="@+id/saveImage"
+                android:layout_marginTop="40dp"
+                android:layout_below="@+id/total"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/button"
                 android:text="Subscribe Now"
+                android:textColor="@android:color/white"
+
+                />
+
+            <Button
+                android:id="@+id/saveImage"
+                android:visibility="visible"
+                android:layout_width="170dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/subscribe"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/button"
+                android:text="Save Report"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="40dp"
                 />

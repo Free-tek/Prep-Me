@@ -5,83 +5,112 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
+    <TextView
+        android:id="@+id/demo"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="40dp"
+        android:text="Demo" />
+
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:textSize="11sp"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:text="3:59"
+        android:gravity="center"
+        android:background="@drawable/circle_number"/>
+
+    <TextView
+        android:id="@+id/minute"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:textSize="11sp"
+        android:layout_below="@+id/time"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="-5dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:text="minutes"
+        android:gravity="center"/>
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_weight="2"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/minute">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
-            <TextView
-                android:id="@+id/demo"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"
-                android:text="Demo" />
 
 
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:textSize="11sp"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="10dp"
-                android:layout_alignParentEnd="true"
-                android:text="3:59"
-                android:gravity="center"
-                android:background="@drawable/circle_number"/>
 
-            <ProgressBar
-                android:id="@+id/progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:layout_weight="2"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
 
 
             <TextView
                 android:id="@+id/instruction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="This is an instruction "
-                android:textColor="@android:color/black"
+                android:text=""
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
+
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="20dp"/>
 
-
-            <ScrollView
+            <RelativeLayout
                 android:id="@+id/more"
-                android:layout_below="@id/instruction"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_below="@+id/instruction">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/question_image"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    />
+
+                <TextView
+                    android:id="@+id/comprehension"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:text=""/>
 
+            </RelativeLayout>
 
-                </LinearLayout>
-            </ScrollView>
 
             <TextView
                 android:id="@+id/number"
@@ -92,8 +121,8 @@
                 android:textSize="14sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_below="@+id/more"
-                android:layout_marginTop="17dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
                 android:background="@drawable/circle_number_white"
                 />
 
@@ -103,12 +132,12 @@
                 android:id="@+id/question"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="This us a Question"
+                android:text=""
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
                 android:layout_below="@+id/more"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginLeft="65dp"
                 android:layout_marginRight="20dp"/>
 
 
