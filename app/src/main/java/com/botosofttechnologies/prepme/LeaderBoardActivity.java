@@ -1,8 +1,11 @@
 package com.botosofttechnologies.prepme;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.botosofttechnologies.prepme.Model.LeaderBoardModel;
 import com.botosofttechnologies.prepme.ViewHolder.LeaderBoardViewHolder;
@@ -28,6 +32,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class LeaderBoardActivity extends AppCompatActivity {
 
@@ -96,8 +103,17 @@ public class LeaderBoardActivity extends AppCompatActivity {
                 $name = String.valueOf(dataSnapshot.child(userId).child("name").getValue());
                 $star = String.valueOf(dataSnapshot.child(userId).child("currentExamTotal").child("total").getValue());
 
+                if($star.equals("null")){
+                    $star = "0";
+                }
                 String lbcount = String.valueOf(dataSnapshot.child(userId).child("lbKey").getValue());
-                int score = Integer.parseInt(String.valueOf(dataSnapshot.child(userId).child("currentExamTotal").child("total").getValue()));
+                int score = 0;
+                try {
+                    score = Integer.parseInt(String.valueOf(dataSnapshot.child(userId).child("currentExamTotal").child("total").getValue()));
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
+
                 Leaderboard.child(lbcount).child("star").setValue(score);
 
 
@@ -175,8 +191,6 @@ public class LeaderBoardActivity extends AppCompatActivity {
                 .getReference().child("leader_board").orderByChild("star");
 
 
-
-
         FirebaseRecyclerOptions<LeaderBoardModel> options =
                 new FirebaseRecyclerOptions.Builder<LeaderBoardModel>()
                         .setQuery(query, new SnapshotParser<LeaderBoardModel>() {
@@ -192,9 +206,6 @@ public class LeaderBoardActivity extends AppCompatActivity {
                         .build();
 
 
-
-
-
         adapter = new FirebaseRecyclerAdapter<LeaderBoardModel, LeaderBoardViewHolder>(options) {
             @NonNull
             @Override
@@ -205,7 +216,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull final LeaderBoardViewHolder viewHolder, final int position, @NonNull final LeaderBoardModel model) {
+            protected void onBindViewHolder(@NonNull final LeaderBoardViewHolder viewHolder, @SuppressLint("RecyclerView") final int position, @NonNull final LeaderBoardModel model) {
 
                 Leaderboard.addValueEventListener(new ValueEventListener() {
                     @Override

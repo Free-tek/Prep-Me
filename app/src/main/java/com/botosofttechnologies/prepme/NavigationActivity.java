@@ -143,7 +143,7 @@ public class NavigationActivity extends AppCompatActivity
 
 
 
-        header = Typeface.createFromAsset(getAssets(), "fonts/heading.ttf");
+        header = Typeface.createFromAsset(getAssets(), "fonts/subheading.ttf");
         subheading = Typeface.createFromAsset(getAssets(), "fonts/subheading1.ttf");
         title.setTypeface(header);
         question.setTypeface(subheading);
@@ -283,7 +283,7 @@ public class NavigationActivity extends AppCompatActivity
                     startActivity(intent);
                 }else{
                     Intent intent = new Intent(NavigationActivity.this, TakeExamActivity.class);
-                    intent.putExtra("demo",  "false");
+                    intent.putExtra("demo",  "true");
                     startActivity(intent);
                 }
 
