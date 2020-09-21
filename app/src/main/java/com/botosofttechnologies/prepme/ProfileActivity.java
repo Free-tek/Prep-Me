@@ -101,9 +101,15 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-                if($subscriptionStatus.equals("true")){
-                    subscription.setText($remainingTests + " Tests Remaining");
-                    subscription.setVisibility(View.VISIBLE);
+                if($subscriptionStatus.equals("true") || Integer.parseInt($remainingTests) > 0){
+
+                    if(Integer.parseInt($remainingTests) == 1){
+                        subscription.setText($remainingTests + " Test Remaining");
+                    }else{
+                        subscription.setText($remainingTests + " Tests Remaining");
+                    }
+
+
                     //subscription.setText("Subscripiton Active");
 
                 }else{
@@ -194,6 +200,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
+        Intent intent = new Intent(ProfileActivity.this, NavigationActivity.class);
+        startActivity(intent);
     }
 
     protected void onPause() {

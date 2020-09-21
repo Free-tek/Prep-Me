@@ -41,7 +41,7 @@ public class ExamActivity extends AppCompatActivity {
 
     //TODO: chage subscription and remaining_test afterwards
     //TODO: Handle network switch off
-    TextView number, time, question, instruction, demo, comprehension;
+    TextView number, time, question, instruction, demo, comprehension, minute;
     RadioGroup radioGroup;
     RadioButton optionA, optionB, optionC, optionD;
     Button submit;
@@ -51,6 +51,7 @@ public class ExamActivity extends AppCompatActivity {
     RelativeLayout more;
     ImageView questionImage;
 
+    ScrollView scroll;
     int comprehensionQuestionCount, comprehensionType;
 
     ArrayList<Integer> englishQ;
@@ -142,7 +143,7 @@ public class ExamActivity extends AppCompatActivity {
         paper2Count = 3;
         paper3Count = 3;
         paper4Count = 3;
-        timerStart(600000);
+        timerStart(6000);
 
         englishQ = getRandomNonRepeatingIntegers(paper1Count, 1, 10);
         _paper2 = getRandomNonRepeatingIntegers(paper2Count, 1, 5);
@@ -198,8 +199,13 @@ public class ExamActivity extends AppCompatActivity {
             users.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                     int $remainingSubscription = Integer.parseInt(String.valueOf(dataSnapshot.child(userId).child("remaining_subscription").getValue()));
                     users.child(userId).child("remaining_subscription").setValue($remainingSubscription - 1);
+
+                    if(($remainingSubscription - 1) == 0){
+                        users.child(userId).child("subscription").setValue(false);
+                    }
                 }
 
                 @Override
@@ -212,6 +218,8 @@ public class ExamActivity extends AppCompatActivity {
     }
 
     private void initUi() {
+
+        scroll = (ScrollView) findViewById(R.id.scroll);
 
         more = (RelativeLayout) findViewById(R.id.more);
         questionImage = (ImageView) findViewById(R.id.question_image);
@@ -231,6 +239,7 @@ public class ExamActivity extends AppCompatActivity {
         instruction = (TextView) findViewById(R.id.instruction);
 
         demo = (TextView) findViewById(R.id.demo);
+        minute = (TextView) findViewById(R.id.minute);
 
         if(_demo.equals("true")){
             demo.setVisibility(View.VISIBLE);
@@ -358,12 +367,38 @@ public class ExamActivity extends AppCompatActivity {
 
                     if(!_demo.equals("true")){
                         //save users score
-                        users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
+
+                        users.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                String lbcount = String.valueOf(dataSnapshot.child(userId).child("lbKey").getValue());
+                                String currentTotal = String.valueOf(dataSnapshot.child(userId).child("currentExamTotal").child("total").getValue());
+                                leaderboard.child(lbcount).child("star").setValue(String.valueOf(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4));
+
+                                if(Integer.parseInt(currentTotal) <= scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4){
+                                    users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
+                                    users.child(userId).child("currentExam").child(paper2).setValue(scorePaper2);
+                                    users.child(userId).child("currentExam").child(paper3).setValue(scorePaper3);
+                                    users.child(userId).child("currentExam").child(paper4).setValue(scorePaper4);
+                                    users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                        /*users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
                         users.child(userId).child("currentExam").child(paper2).setValue(scorePaper2);
                         users.child(userId).child("currentExam").child(paper3).setValue(scorePaper3);
                         users.child(userId).child("currentExam").child(paper4).setValue(scorePaper4);
                         users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
-
+*/
                     }
 
                     Intent intent = new Intent(ExamActivity.this, ExamScoreActivity.class);
@@ -433,11 +468,39 @@ public class ExamActivity extends AppCompatActivity {
                     //save users score just incase the test cancels provided it is not a demo test
 
                     if(!_demo.equals("true")){
-                        users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
+
+                        users.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                String lbcount = String.valueOf(dataSnapshot.child(userId).child("lbKey").getValue());
+                                String currentTotal = String.valueOf(dataSnapshot.child(userId).child("currentExamTotal").child("total").getValue());
+                                leaderboard.child(lbcount).child("star").setValue(String.valueOf(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4));
+
+                                if(Integer.parseInt(currentTotal) <= scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4){
+                                    users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
+                                    users.child(userId).child("currentExam").child(paper2).setValue(scorePaper2);
+                                    users.child(userId).child("currentExam").child(paper3).setValue(scorePaper3);
+                                    users.child(userId).child("currentExam").child(paper4).setValue(scorePaper4);
+                                    users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                        /*users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
                         users.child(userId).child("currentExam").child(paper2).setValue(scorePaper2);
                         users.child(userId).child("currentExam").child(paper3).setValue(scorePaper3);
                         users.child(userId).child("currentExam").child(paper4).setValue(scorePaper4);
-                        users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
+                        users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);*/
+
+
                     }
 
 
@@ -451,7 +514,7 @@ public class ExamActivity extends AppCompatActivity {
                     optionC.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     optionD.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
 
-                    more.scrollTo(0, 0);
+                    scroll.scrollTo(0, 0);
 
                 }
 
@@ -665,7 +728,7 @@ public class ExamActivity extends AppCompatActivity {
                     if (mimageUrl.length() >= 10){
                         //question has an image
                         more.setVisibility(View.VISIBLE);
-                        comprehension.setVisibility(View.INVISIBLE);
+                        comprehension.setVisibility(View.GONE);
                         Picasso.with(ExamActivity.this).load(mimageUrl).into(questionImage);
                         questionImage.setVisibility(View.VISIBLE);
 
@@ -718,7 +781,7 @@ public class ExamActivity extends AppCompatActivity {
                     if (mimageUrl.length() >= 10){
                         //question has an image
                         more.setVisibility(View.VISIBLE);
-                        comprehension.setVisibility(View.INVISIBLE);
+                        comprehension.setVisibility(View.GONE);
                         Picasso.with(ExamActivity.this).load(mimageUrl).into(questionImage);
                         questionImage.setVisibility(View.VISIBLE);
 
@@ -773,7 +836,7 @@ public class ExamActivity extends AppCompatActivity {
                     if (mimageUrl.length() >= 10){
                         //question has an image
                         more.setVisibility(View.VISIBLE);
-                        comprehension.setVisibility(View.INVISIBLE);
+                        comprehension.setVisibility(View.GONE);
                         Picasso.with(ExamActivity.this).load(mimageUrl).into(questionImage);
                         questionImage.setVisibility(View.VISIBLE);
 
@@ -927,8 +990,9 @@ public class ExamActivity extends AppCompatActivity {
                 String $time = "" + minutes;
                 time.setText($time);
 
-                if(minutes == 5){
+                if(minutes <= 5){
                     time.setBackground(getResources().getDrawable(R.drawable.circle_number_red));
+                    minute.setTextColor(getResources().getColor(R.color.red));
                 }
             }
 
@@ -938,18 +1002,24 @@ public class ExamActivity extends AppCompatActivity {
 
                 //save users score  if it  is not a demo test
                 if(!_demo.equals("true")){
-                    users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
-                    users.child(userId).child("currentExam").child(paper2).setValue(scorePaper2);
-                    users.child(userId).child("currentExam").child(paper3).setValue(scorePaper3);
-                    users.child(userId).child("currentExam").child(paper4).setValue(scorePaper4);
-                    users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
 
 
                     users.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             String lbcount = String.valueOf(dataSnapshot.child(userId).child("lbKey").getValue());
+                            String currentTotal = String.valueOf(dataSnapshot.child(userId).child("currentExamTotal").child("total").getValue());
                             leaderboard.child(lbcount).child("star").setValue(String.valueOf(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4));
+
+                            if(Integer.parseInt(currentTotal) <= scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4){
+                                users.child(userId).child("currentExam").child("English Language").setValue(scorePaper1);
+                                users.child(userId).child("currentExam").child(paper2).setValue(scorePaper2);
+                                users.child(userId).child("currentExam").child(paper3).setValue(scorePaper3);
+                                users.child(userId).child("currentExam").child(paper4).setValue(scorePaper4);
+                                users.child(userId).child("currentExamTotal").child("total").setValue(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
+                            }
+
+
                         }
 
                         @Override
@@ -963,18 +1033,18 @@ public class ExamActivity extends AppCompatActivity {
 
 
                 Intent intent = new Intent(ExamActivity.this, ExamScoreActivity.class);
-                intent.putExtra("total", scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4);
+                intent.putExtra("total", String.valueOf(scorePaper1 + scorePaper2 + scorePaper3 + scorePaper4));
                 intent.putExtra("paper1", "English Language" );
-                intent.putExtra("paper2", paper2 );
-                intent.putExtra("paper3", paper3 );
-                intent.putExtra("paper4", paper4 );
+                intent.putExtra("paper2", String.valueOf(paper2) );
+                intent.putExtra("paper3", String.valueOf(paper3) );
+                intent.putExtra("paper4", String.valueOf(paper4) );
                 intent.putExtra("paper1score", String.valueOf(scorePaper1));
                 intent.putExtra("paper2score", String.valueOf(scorePaper2));
                 intent.putExtra("paper3score", String.valueOf(scorePaper3) );
                 intent.putExtra("paper4score", String.valueOf(scorePaper4) );
-                intent.putExtra("ExamNo", examNo );
-                intent.putExtra("StudentName", studentName );
-                intent.putExtra("demo", _demo );
+                intent.putExtra("ExamNo", String.valueOf(examNo) );
+                intent.putExtra("StudentName", String.valueOf(studentName) );
+                intent.putExtra("demo", String.valueOf(_demo) );
                 progressBar.setVisibility(View.INVISIBLE);
                 startActivity(intent);
             }

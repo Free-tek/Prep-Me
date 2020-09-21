@@ -37,7 +37,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class NavigationActivity extends AppCompatActivity
@@ -89,6 +91,50 @@ public class NavigationActivity extends AppCompatActivity
         initUi();
 
         $subscritpionCheck = "false";
+
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Date currentDate = (Date) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("Africa/Lagos")).getTime();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                final String date = dateFormat.format(currentDate);
+
+                String subscriptionDate = String.valueOf(dataSnapshot.child(userId).child("subscription_date").getValue());
+
+                try {
+                    Date date1=new SimpleDateFormat("dd-MM-yyyy").parse(subscriptionDate);
+                    Date date2=new SimpleDateFormat("dd-MM-yyyy").parse(date);
+
+                    Calendar day1 = Calendar.getInstance();
+                    Calendar day2 = Calendar.getInstance();
+                    day1.setTime(date1);
+                    day2.setTime(date2);
+
+                    int daysBetween = day2.get(Calendar.DAY_OF_YEAR) - day1.get(Calendar.DAY_OF_YEAR);
+
+                    if(daysBetween >= 360){
+                        users.child(userId).child("subscription").setValue(false);
+                    }else if(daysBetween >= 30){
+                        users.child(userId).child("subject_change_count").setValue(0);
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
 
     }
 
@@ -246,13 +292,18 @@ public class NavigationActivity extends AppCompatActivity
                     title.setVisibility(View.INVISIBLE);
                     //getOldQuestions(lastQuizSubject, lastQuizQuestionNo);
 
-                    if(subsriptionValue.equals("false")){
+                    if(subsriptionValue.equals("false") || $remainingTests == 0){
                         subscribe.setVisibility(View.VISIBLE);
                         takeDemo.setVisibility(View.VISIBLE);
                         logo.setVisibility(View.VISIBLE);
                     }else{
                         subscribe.setVisibility(View.VISIBLE);
-                        subscribe.setText($remainingTests + " Tests Remaining");
+                        if($remainingTests == 1){
+                            subscribe.setText($remainingTests + " Test Remaining");
+                        }else{
+                            subscribe.setText($remainingTests + " Tests Remaining");
+                        }
+
                         subscribe.setBackground(getResources().getDrawable(R.drawable.transparent_text));
                         subscribe.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                         subscribe.setEnabled(false);

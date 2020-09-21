@@ -283,7 +283,14 @@ public class PaymentActivity extends AppCompatActivity {
 
                 final String $userId = user.getUid();
 
+                Date currentDate = (Date) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("Africa/Lagos")).getTime();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                final String date = dateFormat.format(currentDate);
+
                 users.child($userId).child("subscription").setValue(true);
+                users.child($userId).child("subscription_date").setValue(date);
+                users.child($userId).child("subject_change_count").setValue(0);
+
                 users.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -298,11 +305,6 @@ public class PaymentActivity extends AppCompatActivity {
                 });
 
                 //
-
-                Date currentDate = (Date) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("Africa/Lagos")).getTime();
-
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                final String date = dateFormat.format(currentDate);
 
 
                 payments.addListenerForSingleValueEvent(new ValueEventListener() {

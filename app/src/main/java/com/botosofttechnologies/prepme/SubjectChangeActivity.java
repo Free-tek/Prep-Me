@@ -1,7 +1,10 @@
 package com.botosofttechnologies.prepme;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,8 +16,15 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SubjectChangeActivity extends AppCompatActivity {
 
@@ -38,6 +48,7 @@ public class SubjectChangeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subject_change);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         initUi();
     }
@@ -79,33 +90,112 @@ public class SubjectChangeActivity extends AppCompatActivity {
                 }else if(checkAccumulator != 4){
                     Toast.makeText(SubjectChangeActivity.this,  "Select only four subject combinations", Toast.LENGTH_SHORT).show();
                 }else if(checkAccumulator == 4){
-                    done.setVisibility(View.VISIBLE);
-                    done_text.setVisibility(View.VISIBLE);
 
-                    selectSubject.setVisibility(View.INVISIBLE);
-                    English.setVisibility(View.INVISIBLE);
-                    Maths.setVisibility(View.INVISIBLE);
-                    Physics.setVisibility(View.INVISIBLE);
-                    Chemistry.setVisibility(View.INVISIBLE);
-                    Biology.setVisibility(View.INVISIBLE);
-                    Commerce.setVisibility(View.INVISIBLE);
-                    Accounting.setVisibility(View.INVISIBLE);
-                    Government.setVisibility(View.INVISIBLE);
-                    Economics.setVisibility(View.INVISIBLE);
-                    Literature.setVisibility(View.INVISIBLE);
-                    Geography.setVisibility(View.INVISIBLE);
-                    Agric.setVisibility(View.INVISIBLE);
-                    History.setVisibility(View.INVISIBLE);
-                    Crk.setVisibility(View.INVISIBLE);
-                    finished.setVisibility(View.INVISIBLE);
+                    users.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            String subscriptionStatus = String.valueOf(dataSnapshot.child(userId).child("subscription").getValue());
+
+                            if(subscriptionStatus.equals("true")){
+                                String subscriptionDate = String.valueOf(dataSnapshot.child(userId).child("subscription_date").getValue());
+                                String subjectChangeCount = String.valueOf(dataSnapshot.child(userId).child("subject_change_count").getValue());
+
+                                Date currentDate = (Date) java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("Africa/Lagos")).getTime();
+                                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                final String date = dateFormat.format(currentDate);
+
+                                if(date.split("-")[1].equals(subscriptionDate.split("-")[1]) && Integer.parseInt(subjectChangeCount) >= 2){
+                                    AlertDialog alertDialog = new AlertDialog.Builder(SubjectChangeActivity.this).create();
+                                    alertDialog.setTitle("OOps...");
+                                    alertDialog.setMessage("You can only change your subject twice in 30 days" );
+                                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Okay",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+
+                                                }
+                                            });
+
+                                }else if(Integer.parseInt(subjectChangeCount) >= 2){
+
+                                    AlertDialog alertDialog = new AlertDialog.Builder(SubjectChangeActivity.this).create();
+                                    alertDialog.setTitle("OOps...");
+                                    alertDialog.setMessage("You can only change your subject twice in 30 days" );
+                                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Okay",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+
+                                                }
+                                            });
+                                }else{
+                                    done.setVisibility(View.VISIBLE);
+                                    done_text.setVisibility(View.VISIBLE);
+
+                                    selectSubject.setVisibility(View.INVISIBLE);
+                                    English.setVisibility(View.INVISIBLE);
+                                    Maths.setVisibility(View.INVISIBLE);
+                                    Physics.setVisibility(View.INVISIBLE);
+                                    Chemistry.setVisibility(View.INVISIBLE);
+                                    Biology.setVisibility(View.INVISIBLE);
+                                    Commerce.setVisibility(View.INVISIBLE);
+                                    Accounting.setVisibility(View.INVISIBLE);
+                                    Government.setVisibility(View.INVISIBLE);
+                                    Economics.setVisibility(View.INVISIBLE);
+                                    Literature.setVisibility(View.INVISIBLE);
+                                    Geography.setVisibility(View.INVISIBLE);
+                                    Agric.setVisibility(View.INVISIBLE);
+                                    History.setVisibility(View.INVISIBLE);
+                                    Crk.setVisibility(View.INVISIBLE);
+                                    finished.setVisibility(View.INVISIBLE);
 
 
-                    getChecked();
+                                    getChecked();
 
-                    users.child(userId).child("subjects").child("0").setValue($paper1);
-                    users.child(userId).child("subjects").child("1").setValue($paper2);
-                    users.child(userId).child("subjects").child("2").setValue($paper3);
-                    users.child(userId).child("subjects").child("3").setValue($paper4);
+                                    users.child(userId).child("subjects").child("0").setValue($paper1);
+                                    users.child(userId).child("subjects").child("1").setValue($paper2);
+                                    users.child(userId).child("subjects").child("2").setValue($paper3);
+                                    users.child(userId).child("subjects").child("3").setValue($paper4);
+                                }
+
+                            }else{
+
+                                AlertDialog alertDialog = new AlertDialog.Builder(SubjectChangeActivity.this).create();
+                                alertDialog.setTitle("OOps...");
+                                alertDialog.setMessage("You can't change your subject until you have an active subscription" );
+                                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Okay",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+
+                                            }
+                                        });
+
+                                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Subscribe Now",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Intent intent = new Intent(SubjectChangeActivity.this, PaymentActivity.class);
+                                                startActivity(intent);
+
+                                            }
+                                        });
+                                alertDialog.show();
+
+                            }
+
+                        }
+
+                       @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
 
 
                 }

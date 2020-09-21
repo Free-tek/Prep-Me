@@ -60,6 +60,7 @@
 
 
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/minute">
@@ -99,8 +100,8 @@
 
                 <ImageView
                     android:id="@+id/question_image"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     />
 
                 <TextView
