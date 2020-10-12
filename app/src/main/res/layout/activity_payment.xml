@@ -34,300 +34,320 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="30dp"
-        android:background="@android:color/white"
-        android:elevation="4dp">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_width="match_parent"
-
-            >
-
-
-            <ImageView
-                android:id="@+id/t1"
-                android:layout_height="40dp"
-                android:layout_width="240dp"
-                android:layout_marginLeft="30dp"
-                android:src="@drawable/transparent_text"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
-            <EditText
-                android:id="@+id/surname"
-                android:layout_height="35dp"
-                android:layout_width="220dp"
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_below="@+id/title"
-                android:layout_marginTop="35dp"
-                android:textSize="11.5sp"
-                android:backgroundTint="#ffffff"
-                android:inputType="text"
-                android:layout_centerHorizontal="true"
-                android:textCursorDrawable="@null"
-                />
-
-
-            <TextView
-                android:id="@+id/text1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:text="Surname"
-                android:background="#ffffff"
-                android:layout_below="@+id/title"
-                android:layout_alignLeft="@+id/surname"
-                android:layout_marginLeft="10dp"
-                android:textColor="@android:color/black"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textSize="14sp"
-                />
-
-
-
-            <ImageView
-                android:id="@+id/t2"
-                android:layout_height="40dp"
-                android:layout_width="240dp"
-                android:layout_marginLeft="30dp"
-                android:src="@drawable/transparent_text"
-                android:layout_below="@+id/surname"
-                android:layout_marginTop="20dp"
-                android:layout_centerHorizontal="true"/>
-
-
-            <EditText
-                android:id="@+id/firstName"
-                android:layout_height="35dp"
-                android:layout_width="220dp"
-                android:layout_marginLeft="40dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_below="@+id/surname"
-                android:layout_marginTop="25dp"
-                android:textSize="11.5sp"
-                android:backgroundTint="#ffffff"
-                android:inputType="text"
-                android:layout_centerHorizontal="true"
-                android:textCursorDrawable="@null"
-                />
-
-
-            <TextView
-                android:id="@+id/text2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_below="@+id/surname"
-                android:text="Firstname"
-                android:background="#ffffff"
-                android:layout_alignLeft="@+id/surname"
-                android:layout_marginLeft="10dp"
-                android:textColor="@android:color/black"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textSize="14sp"
-                />
-
-
-
-
-            <ImageView
-                android:id="@+id/t3"
-                android:layout_height="40dp"
-                android:layout_width="240dp"
-                android:layout_marginLeft="30dp"
-                android:src="@drawable/transparent_text"
-                android:layout_below="@+id/firstName"
-                android:layout_marginTop="20dp"
-                android:layout_centerHorizontal="true"/>
-
-
-            <EditText
-                android:id="@+id/cardNumber"
-                android:layout_height="35dp"
-                android:layout_width="220dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="35dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_below="@+id/firstName"
-                android:layout_marginTop="25dp"
-                android:textSize="11.5sp"
-                android:backgroundTint="#ffffff"
-                android:layout_centerHorizontal="true"
-                android:inputType="number"
-                android:textCursorDrawable="@null"
-                />
-
-
-            <TextView
-                android:id="@+id/text3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_below="@+id/firstName"
-                android:text="Card Number"
-                android:background="#ffffff"
-                android:textSize="14sp"
-                android:layout_alignLeft="@+id/surname"
-                android:layout_marginLeft="10dp"
-                android:textColor="@android:color/black"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                />
-
-
-            <ImageView
-                android:id="@+id/t4"
-                android:layout_height="40dp"
-                android:layout_width="80dp"
-                android:layout_alignLeft="@+id/t3"
-                android:src="@drawable/transparent_text"
-                android:layout_below="@+id/cardNumber"
-                android:layout_marginTop="20dp"/>
-
-
-            <EditText
-                android:id="@+id/cvv"
-                android:layout_height="35dp"
-                android:layout_width="60dp"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_below="@+id/cardNumber"
-                android:layout_marginTop="25dp"
-                android:textSize="11.5sp"
-                android:backgroundTint="#ffffff"
-                android:inputType="number"
-                android:text=""
-                android:textCursorDrawable="@null"
-                android:layout_alignLeft="@+id/t4"
-                />
-
-
-            <TextView
-                android:id="@+id/text4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_below="@+id/cardNumber"
-                android:text="CVV"
-                android:background="#ffffff"
-                android:layout_alignLeft="@+id/surname"
-                android:layout_marginLeft="10dp"
-                android:textColor="@android:color/black"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textSize="14sp"
-                />
-
-
-            <ImageView
-                android:id="@+id/t5"
-                android:layout_height="40dp"
-                android:layout_width="100dp"
-                android:layout_toRightOf="@+id/t4"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/transparent_text"
-                android:layout_below="@+id/cvv"
-                android:layout_marginTop="-40dp"
-
-                />
-
-
-            <EditText
-                android:id="@+id/expiry_date"
-                android:layout_height="35dp"
-                android:layout_width="120dp"
-                android:layout_alignLeft="@+id/t5"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_below="@+id/cvv"
-                android:layout_marginTop="-35dp"
-                android:textSize="11.5sp"
-                android:backgroundTint="#ffffff"
-                android:layout_centerHorizontal="true"
-                android:textCursorDrawable="@null"
-                android:hint="mm/yy"
-                />
-
-
-            <TextView
-                android:id="@+id/text5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-50dp"
-                android:layout_below="@+id/cvv"
-                android:text="Expiry Date"
-                android:background="#ffffff"
-                android:layout_alignLeft="@+id/expiry_date"
-                android:layout_marginLeft="5dp"
-                android:textColor="@android:color/black"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textSize="14sp"
-                />
-
-
-
-            <ImageView
-                android:id="@+id/cardValid"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/loading"
-                android:layout_below="@+id/expiry_date"
+                android:layout_marginRight="40dp"
                 android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"
-                />
+                android:background="@android:color/white"
+                android:elevation="4dp">
+
+                <RelativeLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+
+                    >
 
 
-            <Button
-                android:id="@+id/process"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:text="Process Payment"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                android:layout_below="@+id/cardValid"
-                android:layout_marginTop="15dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/button"
-                />
+                    <ImageView
+                        android:id="@+id/t1"
+                        android:layout_height="40dp"
+                        android:layout_width="240dp"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/transparent_text"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="30dp"/>
+
+
+                    <EditText
+                        android:id="@+id/surname"
+                        android:layout_height="35dp"
+                        android:layout_width="220dp"
+                        android:layout_marginLeft="40dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_below="@+id/title"
+                        android:layout_marginTop="35dp"
+                        android:textSize="11.5sp"
+                        android:backgroundTint="#ffffff"
+                        android:inputType="text"
+                        android:layout_centerHorizontal="true"
+                        android:textCursorDrawable="@null"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:text="Surname"
+                        android:background="#ffffff"
+                        android:layout_below="@+id/title"
+                        android:layout_alignLeft="@+id/surname"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@android:color/black"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp"
+                        />
 
 
 
-            <ImageView
-                android:id="@+id/success"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/check"
-                android:layout_marginTop="-20dp"
-                android:visibility="invisible"
-                />
+                    <ImageView
+                        android:id="@+id/t2"
+                        android:layout_height="40dp"
+                        android:layout_width="240dp"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/transparent_text"
+                        android:layout_below="@+id/surname"
+                        android:layout_marginTop="20dp"
+                        android:layout_centerHorizontal="true"/>
 
 
-            <TextView
-                android:id="@+id/successText"
-                android:text="Payment Successful"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/success"
-                android:layout_marginTop="25dp"
-                android:textSize="16sp"
-                />
+                    <EditText
+                        android:id="@+id/firstName"
+                        android:layout_height="35dp"
+                        android:layout_width="220dp"
+                        android:layout_marginLeft="40dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_below="@+id/surname"
+                        android:layout_marginTop="25dp"
+                        android:textSize="11.5sp"
+                        android:backgroundTint="#ffffff"
+                        android:inputType="text"
+                        android:layout_centerHorizontal="true"
+                        android:textCursorDrawable="@null"
+                        />
 
 
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_below="@+id/surname"
+                        android:text="Firstname"
+                        android:background="#ffffff"
+                        android:layout_alignLeft="@+id/surname"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@android:color/black"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp"
+                        />
+
+
+
+
+                    <ImageView
+                        android:id="@+id/t3"
+                        android:layout_height="40dp"
+                        android:layout_width="240dp"
+                        android:layout_marginLeft="30dp"
+                        android:src="@drawable/transparent_text"
+                        android:layout_below="@+id/firstName"
+                        android:layout_marginTop="20dp"
+                        android:layout_centerHorizontal="true"/>
+
+
+                    <EditText
+                        android:id="@+id/cardNumber"
+                        android:layout_height="35dp"
+                        android:layout_width="220dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="35dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_below="@+id/firstName"
+                        android:layout_marginTop="25dp"
+                        android:textSize="11.5sp"
+                        android:backgroundTint="#ffffff"
+                        android:layout_centerHorizontal="true"
+                        android:inputType="number"
+                        android:textCursorDrawable="@null"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/text3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_below="@+id/firstName"
+                        android:text="Card Number"
+                        android:background="#ffffff"
+                        android:textSize="14sp"
+                        android:layout_alignLeft="@+id/surname"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@android:color/black"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        />
+
+
+                    <ImageView
+                        android:id="@+id/t4"
+                        android:layout_height="40dp"
+                        android:layout_width="80dp"
+                        android:layout_alignLeft="@+id/t3"
+                        android:src="@drawable/transparent_text"
+                        android:layout_below="@+id/cardNumber"
+                        android:layout_marginTop="20dp"/>
+
+
+                    <EditText
+                        android:id="@+id/cvv"
+                        android:layout_height="35dp"
+                        android:layout_width="60dp"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_below="@+id/cardNumber"
+                        android:layout_marginTop="25dp"
+                        android:textSize="11.5sp"
+                        android:backgroundTint="#ffffff"
+                        android:inputType="number"
+                        android:text=""
+                        android:textCursorDrawable="@null"
+                        android:layout_alignLeft="@+id/t4"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/text4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_below="@+id/cardNumber"
+                        android:text="CVV"
+                        android:background="#ffffff"
+                        android:layout_alignLeft="@+id/surname"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@android:color/black"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp"
+                        />
+
+
+                    <ImageView
+                        android:id="@+id/t5"
+                        android:layout_height="40dp"
+                        android:layout_width="100dp"
+                        android:layout_toRightOf="@+id/t4"
+                        android:layout_marginLeft="20dp"
+                        android:src="@drawable/transparent_text"
+                        android:layout_below="@+id/cvv"
+                        android:layout_marginTop="-40dp"
+
+                        />
+
+
+                    <EditText
+                        android:id="@+id/expiry_date"
+                        android:layout_height="35dp"
+                        android:layout_width="120dp"
+                        android:layout_alignLeft="@+id/t5"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_below="@+id/cvv"
+                        android:layout_marginTop="-35dp"
+                        android:textSize="11.5sp"
+                        android:backgroundTint="#ffffff"
+                        android:layout_centerHorizontal="true"
+                        android:textCursorDrawable="@null"
+                        android:hint="mm/yy"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/text5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-50dp"
+                        android:layout_below="@+id/cvv"
+                        android:text="Expiry Date"
+                        android:background="#ffffff"
+                        android:layout_alignLeft="@+id/expiry_date"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@android:color/black"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp"
+                        />
+
+
+
+                    <ImageView
+                        android:id="@+id/cardValid"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/loading"
+                        android:layout_below="@+id/expiry_date"
+                        android:layout_marginTop="30dp"
+                        android:layout_centerHorizontal="true"
+                        />
+
+
+                    <Button
+                        android:id="@+id/process"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:text="Process Payment"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:layout_below="@+id/cardValid"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="30dp"
+                        android:background="@drawable/button"
+                        android:textStyle="bold"
+                        />
+
+
+
+                    <ImageView
+                        android:id="@+id/success"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/check"
+                        android:layout_marginTop="-60dp"
+                        android:visibility="invisible"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/successText"
+                        android:text="Payment Successful"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/success"
+                        android:layout_marginTop="25dp"
+                        android:textSize="16sp"
+                        />
+
+
+                </RelativeLayout>
+            </ScrollView>
+
+
+
+        </LinearLayout>
     </ScrollView>
+
+
 
 
 </LinearLayout>

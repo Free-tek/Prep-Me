@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -149,7 +150,6 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
 
-        process.setText(R.string.check_validity);
         expiry_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
@@ -171,7 +171,8 @@ public class PaymentActivity extends AppCompatActivity {
                         text4.setVisibility(View.INVISIBLE);
                         text5.setVisibility(View.INVISIBLE);
                     }else{
-                        Toast.makeText(PaymentActivity.this, "please check card details and try again later", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid card: please check card details and try again later", Snackbar.LENGTH_LONG);
+                        snackbar.show();
                     }
                 }
             }
@@ -180,15 +181,59 @@ public class PaymentActivity extends AppCompatActivity {
 
         process.setOnClickListener(new View.OnClickListener() {
             @Override
-            public String toString() {
-                return "$classname{}";
-            }
-
-            @Override
             public void onClick(View v) {
                 String $processText = String.valueOf(process.getText());
                 if(checkValidity()){
-                    if($processText.equalsIgnoreCase("CHECK VALIDITY")){
+
+                    String $cardNumber = String.valueOf(cardNumber.getText());
+                    int $expiryMonth = Integer.parseInt(String.valueOf(expiry_date.getText()).substring(0,2));
+                    int $expiryYear = Integer.parseInt(String.valueOf(expiry_date.getText()).substring(3,5));
+                    String $cvv = String.valueOf(cvv.getText());
+
+                    card = new Card($cardNumber, $expiryMonth, $expiryYear, $cvv);
+
+
+                    if(card.isValid()){
+                        AlertDialog alertDialog = new AlertDialog.Builder(PaymentActivity.this).create();
+                        alertDialog.setTitle("Proceed");
+                        alertDialog.setMessage("Do you want to proceed to pay N2000?");
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        progressDialog = new ProgressDialog(PaymentActivity.this);
+                                        progressDialog.setMessage("Making Transfer...");
+                                        progressDialog.setCanceledOnTouchOutside(true);
+                                        progressDialog.show();
+
+                                        performCharge();
+
+                                    }
+
+                                });
+
+                        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+
+                                });
+
+
+                        alertDialog.show();
+
+                    }else{
+
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid card: please check card details and try again later", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+
+                    }
+
+
+                    /*if($processText.equalsIgnoreCase("CHECK VALIDITY")){
                         String $cardNumber = String.valueOf(cardNumber.getText());
                         int $expiryMonth = Integer.parseInt(String.valueOf(expiry_date.getText()).substring(0,2));
                         int $expiryYear = Integer.parseInt(String.valueOf(expiry_date.getText()).substring(3,5));
@@ -201,8 +246,8 @@ public class PaymentActivity extends AppCompatActivity {
                             process.setVisibility(View.VISIBLE);
                             process.setText(R.string.process_payment);
                         }else{
-                            Toast.makeText(PaymentActivity.this, "please check card details and try again", Toast.LENGTH_SHORT).show();
-                        }
+                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid card: please check card details and try again later", Snackbar.LENGTH_LONG);
+                            snackbar.show();                        }
 
                     }else if($processText.equalsIgnoreCase("PROCESS PAYMENT")){
                         AlertDialog alertDialog = new AlertDialog.Builder(PaymentActivity.this).create();
@@ -236,7 +281,7 @@ public class PaymentActivity extends AppCompatActivity {
 
                         alertDialog.show();
 
-                    }
+                    }*/
                 }
 
 

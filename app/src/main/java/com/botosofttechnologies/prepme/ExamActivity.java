@@ -143,7 +143,7 @@ public class ExamActivity extends AppCompatActivity {
         paper2Count = 3;
         paper3Count = 3;
         paper4Count = 3;
-        timerStart(6000);
+        timerStart(600000);
 
         englishQ = getRandomNonRepeatingIntegers(paper1Count, 1, 10);
         _paper2 = getRandomNonRepeatingIntegers(paper2Count, 1, 5);
