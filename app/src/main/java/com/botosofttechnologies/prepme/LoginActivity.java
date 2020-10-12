@@ -141,6 +141,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "Please fill the required form", Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
             return;
+        }else if(!isNetworkAvailable()){
+            progressDialog.dismiss();
+            Toast.makeText(LoginActivity.this, "Please check your internet connection",
+                    Toast.LENGTH_SHORT).show();
         }
         final Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
 
